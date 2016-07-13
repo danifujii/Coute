@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/pocket_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/card_pocket_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Pocket"
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp"
+            android:paddingLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/card_pocket_balance_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="$500"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="16dp"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
