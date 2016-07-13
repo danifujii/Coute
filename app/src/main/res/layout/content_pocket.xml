@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.daniel.projectnutella.PocketActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="?actionBarSize">
 
     <TextView
         android:id="@+id/amountTextView"
@@ -20,7 +21,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:background="@color/colorBGGray"
+        >
 
     </android.support.v7.widget.RecyclerView>
 

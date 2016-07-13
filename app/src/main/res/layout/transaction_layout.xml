@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:layout_marginBottom="1dp">
 
     <ImageView
         android:id="@+id/cat_image_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/cat_drinks"/>
+        android:layout_height="match_parent"
+        android:src="@mipmap/cat_drinks"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="16dp"
+        android:maxWidth="8dp"
+        android:maxHeight="8dp"/>
 
     <TextView
         android:id="@+id/t_amount_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="-$50"
-        android:gravity="center_horizontal"
-        android:textColor="@color/colorAccent"
-        android:textSize="30dp"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp"
+        android:paddingTop="8dp"
+        android:paddingLeft="15dp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/cat_image_view"
+        />
 
     <TextView
         android:id="@+id/t_date_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="20/15/2016"/>
+        android:text="20/15/2016"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:paddingTop="20dp"
+        android:paddingRight="16dp"
+        />
 
-</LinearLayout>
+</RelativeLayout>
