@@ -18,6 +18,8 @@ import java.util.List;
 
 public class PocketActivity extends AppCompatActivity {
 
+    private int pocketId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,22 +29,23 @@ public class PocketActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.pocket_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (fab != null)
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
 
-        //CHANGE LATER WITH DB
-        setTitle("Billetera");
+        Bundle extras = getIntent().getExtras();
+        setTitle(extras.getString("TITLE"));
+        pocketId = extras.getInt("ID");
 
         List<Transaction> testList = new ArrayList<>();
         testList.add(new Transaction("$500","10/6/2016",0,0,true));
         testList.add(new Transaction("$30","20/4/2016",0,0,true));
         testList.add(new Transaction("$15","21/5/2016",0,0,true));
-        Log.d("Here",String.valueOf(testList.size()));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.history_recycler_view);
         rv.setHasFixedSize(true);

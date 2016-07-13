@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Daniel on 13/7/2016.
@@ -84,6 +85,16 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor = getWritableDatabase().rawQuery("SELECT 1 FROM " + Tables.TABLE_NAME_POCKET
                     + " WHERE "+ Tables.COLUMN_POCKET_NAME + "='" + name + "'", null);
         return (cursor.getCount()>0);
+    }
+
+    public String getPocketName(int id){
+        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_POCKET
+                        + " WHERE " + Tables.COLUMN_ID + "='" + String.valueOf(id) + "'", null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            return cursor.getString(1);
+        }
+        else return "";
     }
 
     @Override
