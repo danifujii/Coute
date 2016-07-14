@@ -110,6 +110,16 @@ public class DbHelper extends SQLiteOpenHelper {
         else return "";
     }
 
+    public int getCategoryId(String name){
+        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_CAT
+                + " WHERE " + Tables.COLUMN_CAT_NAME + "='" + name + "'", null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            return Integer.valueOf(cursor.getString(1));
+        }
+        else return -1;
+    }
+
     public void deletePocket(int id){
         String[] selectionArgs = { String.valueOf(id) };
         SQLiteDatabase db = getWritableDatabase();

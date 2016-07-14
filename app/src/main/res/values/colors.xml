@@ -5,6 +5,7 @@
     <color name="colorAccent">#607D8B</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBGGray">#ECEFF1</color>
+    <color name="colorDarkGray">#5b5b5b</color>
     <color name="colorBlack">#191919</color>
     <color name="colorExpense">#F44336</color>
     <color name="colorIncome">#8BC34A</color>

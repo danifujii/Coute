@@ -10,4 +10,7 @@
     <string name="error_add_pocket">That pocket already exists</string>
     <string name="delete_dialog">Do you want to delete?</string>
     <string name="delete_button">Delete</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_message">Please deselect the categories you won\'t need.</string>
+    <string name="next">Continue</string>
 </resources>

@@ -47,4 +47,18 @@ public class CategoryManager {
         db.close();
     }
 
+    public static int getCategoryId(Activity act, int idDrawable){
+        DbHelper db = new DbHelper(act);
+        switch(idDrawable){
+            case R.mipmap.cat_clothes: return db.getCategoryId(cat_clothes);
+            case R.mipmap.cat_drinks: return db.getCategoryId(cat_drinks);
+            case R.mipmap.cat_food: return db.getCategoryId(cat_food);
+            case R.mipmap.cat_house: return db.getCategoryId(cat_house);
+            case R.mipmap.cat_oil: return db.getCategoryId(cat_car);
+            case R.mipmap.cat_shopping: return db.getCategoryId(cat_shop);
+            case R.mipmap.cat_transport: return db.getCategoryId(cat_transp);
+        }
+        return 0;
+    }
+
 }
