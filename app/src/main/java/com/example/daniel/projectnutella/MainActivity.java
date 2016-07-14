@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView pocketDialogTV;
     private RecyclerView rv;
+    private List<Pocket> pockets;
+    private int swipedCard = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         CategoryManager.insertCategoriesIntoDB(this);
 
-        rv = (RecyclerView) findViewById(R.id.pockets_recycler_view);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
-        updateRVAdapter();
+        setRecyclerView();
     }
 
      private void addPocket(){
@@ -100,14 +98,65 @@ public class MainActivity extends AppCompatActivity {
          * HACER UN PROPER CURSOR ADAPTER
          * ASAP
          */
-        List<Pocket> pockets = new ArrayList<>();
+        pockets = new ArrayList<>();
         DbHelper db = new DbHelper(MainActivity.this);
         Cursor cursor = db.getPockets();
         while (cursor.moveToNext()){
-            pockets.add(new Pocket(cursor.getString(1),Float.valueOf(cursor.getString(2))));
+            pockets.add(new Pocket(Integer.valueOf(cursor.getString(0)),
+                    cursor.getString(1),Float.valueOf(cursor.getString(2))));
         }
         cursor.close();
         rv.setAdapter(new PocketAdapter(pockets));
+    }
+
+    public void setRecyclerView(){
+        rv = (RecyclerView) findViewById(R.id.pockets_recycler_view);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                swipedCard = viewHolder.getLayoutPosition();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(getString(R.string.delete_dialog))
+                        .setPositiveButton(R.string.delete_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (swipedCard != -1) {
+                                    DbHelper db = new DbHelper(MainActivity.this);
+                                    Pocket p = pockets.get(swipedCard);
+                                    db.deletePocket(p.getId());
+                                    updateRVAdapter();
+                                    swipedCard = -1;
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                updateRVAdapter();
+                            }
+                        });
+                builder.create().show();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(rv);
+        updateRVAdapter();
+    }
+
+    public Pocket getPocket(int pos){
+        return pockets.get(pos);
     }
 
     @Override

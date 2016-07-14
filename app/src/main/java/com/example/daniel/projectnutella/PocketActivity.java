@@ -9,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
+import com.example.daniel.projectnutella.data.Pocket;
 import com.example.daniel.projectnutella.data.Transaction;
 
 import java.util.ArrayList;
@@ -43,9 +45,9 @@ public class PocketActivity extends AppCompatActivity {
         pocketId = extras.getInt("ID");
 
         List<Transaction> testList = new ArrayList<>();
-        testList.add(new Transaction("$500","10/6/2016",0,4,true));
-        testList.add(new Transaction("$30","20/4/2016",0,2,false));
-        testList.add(new Transaction("$15","21/5/2016",0,1,true));
+        testList.add(new Transaction("500","10/6/2016",0,4,true));
+        testList.add(new Transaction("30","20/4/2016",0,2,false));
+        testList.add(new Transaction("15","21/5/2016",0,1,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.history_recycler_view);
         rv.setHasFixedSize(true);
@@ -53,6 +55,19 @@ public class PocketActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
         rv.setAdapter(new TransactionAdapter(testList,this));
+
+        setBalance(testList);
+    }
+
+    public void setBalance(List<Transaction> transactions){
+        double net = 0.0;
+        for(Transaction t: transactions){
+            if (t.getIsIncome())
+                net = net + Double.valueOf(t.getAmount());
+            else net = net - Double.valueOf(t.getAmount());
+        }
+        TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
+        balanceTV.setText("$"+net);
     }
 
 }

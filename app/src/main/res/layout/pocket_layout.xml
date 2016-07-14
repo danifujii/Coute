@@ -29,7 +29,8 @@
             android:text="$500"
             android:textSize="20sp"
             android:layout_alignParentRight="true"
-            android:paddingRight="16dp"/>
+            android:paddingRight="16dp"
+            />
 
     </RelativeLayout>
 

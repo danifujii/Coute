@@ -3,7 +3,8 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:layout_marginBottom="1dp">
+    android:layout_marginBottom="1dp"
+>
 
     <ImageView
         android:id="@+id/cat_image_view"
@@ -27,6 +28,7 @@
         android:paddingLeft="15dp"
         android:gravity="center_vertical"
         android:layout_toRightOf="@+id/cat_image_view"
+        android:fontFamily="sans-serif-light"
         />
 
     <TextView

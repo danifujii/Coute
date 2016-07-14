@@ -110,6 +110,18 @@ public class DbHelper extends SQLiteOpenHelper {
         else return "";
     }
 
+    public void deletePocket(int id){
+        String[] selectionArgs = { String.valueOf(id) };
+        SQLiteDatabase db = getWritableDatabase();
+        getWritableDatabase().delete(Tables.TABLE_NAME_POCKET,
+                Tables.COLUMN_ID + "=?",
+                selectionArgs);
+        db.close();
+        /**
+         * FALTARIA BORRAR LAS CORRESPONDIENTES TRANSACCIONES ANTES.
+         */
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_NAME_TRANS);

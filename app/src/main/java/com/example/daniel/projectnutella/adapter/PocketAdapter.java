@@ -64,13 +64,16 @@ public class PocketAdapter extends RecyclerView.Adapter<PocketAdapter.PocketView
             v.findViewById(R.id.pocket_card_view).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Activity act = (Activity)v.getContext();
-                    int pocketNumber = ((RecyclerView)v.getParent()).getChildLayoutPosition(v) + 1;
-                    DbHelper db = new DbHelper(act);
-                    Intent i = new Intent(act,PocketActivity.class);
-                    i.putExtra("TITLE",db.getPocketName(pocketNumber));
-                    i.putExtra("ID",pocketNumber);
-                    act.startActivity(i);
+                    MainActivity act = (MainActivity)v.getContext();
+                    int pocketPos = ((RecyclerView)v.getParent()).getChildLayoutPosition(v);
+                    Pocket p = act.getPocket(pocketPos);
+                    if (p != null){
+                        DbHelper db = new DbHelper(act);
+                        Intent i = new Intent(act,PocketActivity.class);
+                        i.putExtra("TITLE",db.getPocketName(p.getId()));
+                        i.putExtra("ID",p.getId());
+                        act.startActivity(i);
+                    }
                 }
             });
         }
