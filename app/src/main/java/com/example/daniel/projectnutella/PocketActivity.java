@@ -44,7 +44,7 @@ public class PocketActivity extends AppCompatActivity {
 
         List<Transaction> testList = new ArrayList<>();
         testList.add(new Transaction("$500","10/6/2016",0,0,true));
-        testList.add(new Transaction("$30","20/4/2016",0,0,true));
+        testList.add(new Transaction("$30","20/4/2016",0,0,false));
         testList.add(new Transaction("$15","21/5/2016",0,0,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.history_recycler_view);

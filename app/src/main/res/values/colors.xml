@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00695C</color>
-    <color name="colorAccent">#FFC400</color>
+    <color name="colorAccent">#607D8B</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBGGray">#ECEFF1</color>
     <color name="colorBlack">#191919</color>
+    <color name="colorExpense">#F44336</color>
+    <color name="colorIncome">#8BC34A</color>
 </resources>

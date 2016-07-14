@@ -1,5 +1,6 @@
 package com.example.daniel.projectnutella.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
         Transaction t = transactionList.get(position);
         holder.amountTv.setText(t.getAmount());
+        if (t.getIsIncome() == true)
+            holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorIncome));
+        else holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorExpense));
         holder.dateTv.setText(t.getDate());
     }
 
