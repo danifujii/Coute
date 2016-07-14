@@ -3,6 +3,7 @@ package com.example.daniel.projectnutella;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.content.DialogInterface;
 
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
 import com.example.daniel.projectnutella.data.Pocket;
@@ -69,5 +71,15 @@ public class PocketActivity extends AppCompatActivity {
         TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
         balanceTV.setText("$"+net);
     }
+
+    /*public void addTransaction(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(PocketActivity.this);
+        builder.setTitle("Add Transaction");
+        builder.setPositiveButton(R.string.add_button, new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface, int id) {
+                if (nameTransaction != null)
+            }
+        }
+    }*/
 
 }
