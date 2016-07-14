@@ -43,16 +43,16 @@ public class PocketActivity extends AppCompatActivity {
         pocketId = extras.getInt("ID");
 
         List<Transaction> testList = new ArrayList<>();
-        testList.add(new Transaction("$500","10/6/2016",0,0,true));
-        testList.add(new Transaction("$30","20/4/2016",0,0,false));
-        testList.add(new Transaction("$15","21/5/2016",0,0,true));
+        testList.add(new Transaction("$500","10/6/2016",0,4,true));
+        testList.add(new Transaction("$30","20/4/2016",0,2,false));
+        testList.add(new Transaction("$15","21/5/2016",0,1,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.history_recycler_view);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
-        rv.setAdapter(new TransactionAdapter(testList));
+        rv.setAdapter(new TransactionAdapter(testList,this));
     }
 
 }

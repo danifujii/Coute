@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.daniel.projectnutella.adapter.PocketAdapter;
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
+import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Pocket;
 
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     addPocket();
                 }
             });
+
+        CategoryManager.insertCategoriesIntoDB(this);
 
         rv = (RecyclerView) findViewById(R.id.pockets_recycler_view);
         rv.setHasFixedSize(true);

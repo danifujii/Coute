@@ -1,5 +1,6 @@
 package com.example.daniel.projectnutella.adapter;
 
+import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.daniel.projectnutella.R;
+import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.Transaction;
 
 import java.util.List;
@@ -19,9 +21,12 @@ import java.util.List;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>{
 
     private List<Transaction> transactionList;
+    private Activity act;
 
-    public TransactionAdapter(List<Transaction> tl){
+    public TransactionAdapter(List<Transaction> tl, Activity act)
+    {
         transactionList = tl;
+        this.act = act;
     }
 
     @Override
@@ -32,8 +37,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
         Transaction t = transactionList.get(position);
+
+        holder.iv.setImageDrawable(CategoryManager.getImage(act,t.getCat()));
         holder.amountTv.setText(t.getAmount());
-        if (t.getIsIncome() == true)
+        if (t.getIsIncome())
             holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorIncome));
         else holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorExpense));
         holder.dateTv.setText(t.getDate());

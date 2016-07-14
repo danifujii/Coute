@@ -50,9 +50,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public void insertCategory(String name){
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Tables.COLUMN_CAT_NAME,name);
-        db.insert(Tables.TABLE_NAME_CAT,null,values);
+        if (db.rawQuery("SELECT 1 FROM " + Tables.TABLE_NAME_CAT
+                + " WHERE "+ Tables.COLUMN_CAT_NAME + "='" + name + "'", null).getCount() == 0) {
+            ContentValues values = new ContentValues();
+            values.put(Tables.COLUMN_CAT_NAME, name);
+            db.insert(Tables.TABLE_NAME_CAT, null, values);
+        }
         db.close();
     }
 
@@ -90,6 +93,16 @@ public class DbHelper extends SQLiteOpenHelper {
     public String getPocketName(int id){
         Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_POCKET
                         + " WHERE " + Tables.COLUMN_ID + "='" + String.valueOf(id) + "'", null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            return cursor.getString(1);
+        }
+        else return "";
+    }
+
+    public String getCategoryName(int id){
+        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_CAT
+                + " WHERE " + Tables.COLUMN_ID + "='" + String.valueOf(id) + "'", null);
         if (cursor.getCount()>0) {
             cursor.moveToFirst();
             return cursor.getString(1);
