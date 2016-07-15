@@ -26,8 +26,10 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Si ya eligio las categorias, saltar esta pantalla
         SharedPreferences sp = getSharedPreferences(MainActivity.prefsName,MODE_PRIVATE);
-        if (sp.getBoolean(loguedPref,false))
-            startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+        if (sp.getBoolean(loguedPref,false)) {
+            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            finish();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
