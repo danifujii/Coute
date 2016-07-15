@@ -2,9 +2,11 @@ package com.example.daniel.projectnutella;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,6 +126,11 @@ public class PocketActivity extends AppCompatActivity {
                 }
             }
         });
+        builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //Do nothing when cancelling
+            }
+        });
         builder.setView(R.layout.add_transaction);
         dialogAddTrans = builder.create();
         dialogAddTrans.show();
@@ -158,6 +165,13 @@ public class PocketActivity extends AppCompatActivity {
         }
         cursor.close();
         rv.setAdapter(new TransactionAdapter(transactions,this));
+    }
+
+    public void incomeClick(View v){
+        if (!v.isSelected()) {   //By default buttons are not selected. To us, then this means its a used category
+            v.getBackground().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+            v.setSelected(true);
+        }
     }
 }
 

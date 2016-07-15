@@ -47,12 +47,12 @@ public class CatsGraphActivity extends AppCompatActivity {
 
     private void setGraphic(){
         double total = getGastosTotal();
-        TextView expensesTv = ((TextView)findViewById(R.id.expenses_text_view));
-        expensesTv.setText(String.valueOf(total));
+        //TextView expensesTv = ((TextView)findViewById(R.id.expenses_text_view));
+        //expensesTv.setText(String.valueOf(total));
 
-        CategoryGraphicBuilder cgb = new CategoryGraphicBuilder(getScreenWidthDP());
-        if (Build.VERSION.SDK_INT >= 16)
-            expensesTv.setBackground(cgb.getGraphic(catsList,getGastosTotal(),this));
+        //CategoryGraphicBuilder cgb = new CategoryGraphicBuilder(getScreenWidthDP());
+        //if (Build.VERSION.SDK_INT >= 16)
+        //    expensesTv.setBackground(cgb.getGraphic(catsList,getGastosTotal(),this));
     }
 
     private double getGastosTotal(){
