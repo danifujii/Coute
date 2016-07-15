@@ -1,5 +1,6 @@
 package com.example.daniel.projectnutella;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -67,6 +68,15 @@ public class PocketActivity extends AppCompatActivity {
         rv.setAdapter(new TransactionAdapter(testList,this));
 
         setBalance(testList);
+
+        findViewById(R.id.cats_detail_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PocketActivity.this,CatsGraphActivity.class);
+                i.putExtra("ID",pocketId);
+                startActivity(i);
+            }
+        });
     }
 
     public void setBalance(List<Transaction> transactions){

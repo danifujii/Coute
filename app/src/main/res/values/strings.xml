@@ -14,4 +14,5 @@
     <string name="welcome_message">Please deselect the categories you won\'t need.</string>
     <string name="next">Continue</string>
     <string name="error_add_transaction">Error</string>
+    <string name="expenses">Expenses</string>
 </resources>
