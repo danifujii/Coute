@@ -81,10 +81,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SPEND"
+            android:textColor="@color/colorWhite"
             android:id="@+id/spendBT"
             android:layout_weight="0.26"
             android:allowUndo="false"
-            android:clickable="false" />
+            android:clickable="false"
+            android:backgroundTint="@color/colorPrimary"/>
 
 
         <Button
@@ -117,55 +119,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_clothes"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_drinks"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_food"
-            android:backgroundTint="@color/colorPrimary"
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_house"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_oil"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_shopping"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cat_transport"
-            android:backgroundTint="@color/colorPrimary"
-
+            android:onClick="incomeClick"
             />
 
     </GridLayout>
