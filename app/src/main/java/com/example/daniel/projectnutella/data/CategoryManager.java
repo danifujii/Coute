@@ -1,6 +1,8 @@
 package com.example.daniel.projectnutella.data;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 
@@ -31,7 +33,7 @@ public class CategoryManager {
             case cat_shop: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_shopping,null);
             case cat_transp: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_transport,null);
         }
-        return null;
+        return new ColorDrawable(Color.TRANSPARENT);
     }
 
     public static void insertCategoriesIntoDB(Activity act){

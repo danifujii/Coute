@@ -1,6 +1,5 @@
 package com.example.daniel.projectnutella;
 
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +9,8 @@ import android.view.Display;
 import android.widget.TextView;
 
 import com.example.daniel.projectnutella.adapter.CategoryAdapter;
-import com.example.daniel.projectnutella.adapter.TransactionAdapter;
 import com.example.daniel.projectnutella.data.Transaction;
-import com.example.daniel.projectnutella.graphic.CategoryGraphicBuilder;
+import com.example.daniel.projectnutella.graphic.ExpGraphicView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +45,12 @@ public class CatsGraphActivity extends AppCompatActivity {
 
     private void setGraphic(){
         double total = getGastosTotal();
-        //TextView expensesTv = ((TextView)findViewById(R.id.expenses_text_view));
-        //expensesTv.setText(String.valueOf(total));
-
-        //CategoryGraphicBuilder cgb = new CategoryGraphicBuilder(getScreenWidthDP());
-        //if (Build.VERSION.SDK_INT >= 16)
-        //    expensesTv.setBackground(cgb.getGraphic(catsList,getGastosTotal(),this));
+        ExpGraphicView egv = (ExpGraphicView) findViewById(R.id.expenses_graphic_view);
+        if (egv != null)
+            egv.setCategories(catsList,total,getScreenWidthDP());
+        TextView expensesTv = ((TextView)findViewById(R.id.expenses_text_view));
+        if (expensesTv != null)
+            expensesTv.setText("$"+String.valueOf(total));
     }
 
     private double getGastosTotal(){
@@ -68,6 +66,7 @@ public class CatsGraphActivity extends AppCompatActivity {
         display.getMetrics(outMetrics);
 
         float density  = getResources().getDisplayMetrics().density;
-        return outMetrics.widthPixels / density;
+        //return outMetrics.widthPixels / density;
+        return outMetrics.widthPixels;
     }
 }

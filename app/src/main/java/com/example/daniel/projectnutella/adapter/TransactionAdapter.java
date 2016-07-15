@@ -47,7 +47,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         String date = t.getDate();
         int spacePos = date.indexOf(" ");
-        Log.d("Space position",String.valueOf(spacePos));
         if (spacePos>=0)
             holder.dateTv.setText(date.substring(0,spacePos).replace('-','/'));
     }

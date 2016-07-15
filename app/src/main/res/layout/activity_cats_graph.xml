@@ -8,9 +8,27 @@
     tools:context="com.example.daniel.projectnutella.CatsGraphActivity"
     >
 
-    <com.example.daniel.projectnutella.graphic.ExpGraphicView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <com.example.daniel.projectnutella.graphic.ExpGraphicView
+            android:id="@+id/expenses_graphic_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <TextView
+            android:id="@+id/expenses_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="55sp"
+            android:text="200"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"/>
+
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cats_recycler_view"

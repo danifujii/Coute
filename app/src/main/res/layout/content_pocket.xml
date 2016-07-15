@@ -14,7 +14,7 @@
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:textSize="55dp"
+        android:textSize="55sp"
         android:height="100dp"
         android:fontFamily="sans-serif-thin"
         />
