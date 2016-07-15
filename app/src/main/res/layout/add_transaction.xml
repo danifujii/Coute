@@ -19,7 +19,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/amount"
+        android:id="@+id/amountET"
         android:hint="Amount"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
@@ -27,45 +27,51 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
+        android:gravity="center"
+        android:id="@+id/layoutAmounts">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$5"
-            android:id="@+id/buttonAmoun1" />
+            android:id="@+id/buttonAmoun1"
+            style="?android:attr/borderlessButtonStyle"
+            android:textColor="@color/colorPrimary"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$10"
+            android:textColor="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/buttonAmount2" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$25"
+            android:textColor="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/buttonAmount3" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$100"
+            android:textColor="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/buttonAmount4" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
@@ -75,16 +81,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SPEND"
-            android:id="@+id/button"
+            android:id="@+id/spendBT"
             android:layout_weight="0.26"
-            android:allowUndo="false" />
+            android:allowUndo="false"
+            android:clickable="false" />
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GAIN"
-            android:id="@+id/button2"
+            android:id="@+id/gainBT"
             android:layout_weight="0.26"
             android:allowUndo="false" />
     </LinearLayout>
