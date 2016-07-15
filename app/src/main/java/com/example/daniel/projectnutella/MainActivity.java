@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     cursor.getString(1),Float.valueOf(cursor.getString(2))));
         }
         cursor.close();
-        rv.setAdapter(new PocketAdapter(pockets));
+        rv.setAdapter(new PocketAdapter(pockets,this));
     }
 
     public void setRecyclerView(){

@@ -2,6 +2,7 @@ package com.example.daniel.projectnutella.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +27,11 @@ import java.util.List;
 public class PocketAdapter extends RecyclerView.Adapter<PocketAdapter.PocketViewHolder>{
 
     private List<Pocket> pocketList;
+    private Activity act;
 
-    public PocketAdapter(List<Pocket> pl){
+    public PocketAdapter(List<Pocket> pl, Activity activity){
         pocketList = pl;
+        act = activity;
     }
 
     @Override
@@ -38,9 +41,15 @@ public class PocketAdapter extends RecyclerView.Adapter<PocketAdapter.PocketView
 
     @Override
     public void onBindViewHolder(PocketAdapter.PocketViewHolder holder, int position) {
-        Pocket t = pocketList.get(position);
-        holder.nameTv.setText(t.getName());
-        holder.balanceTv.setText(String.valueOf(t.getBalance()));
+        Pocket p = pocketList.get(position);
+        holder.nameTv.setText(p.getName());
+        double balance = 0.0;
+        Cursor c = (new DbHelper(act)).getTransactions(p.getId());
+        while (c.moveToNext())
+            if (c.getInt(2)>0)  //is Income
+                balance = balance + Double.valueOf(c.getString(1));
+            else balance = balance - Double.valueOf(c.getString(1));
+        holder.balanceTv.setText(String.valueOf(balance));
     }
 
     @Override

@@ -27,8 +27,10 @@ public class DbHelper extends SQLiteOpenHelper {
             + Tables.COLUMN_POCKET_NAME + " varchar(60) NOT NULL," + Tables.COLUMN_POCKET_BALANCE + " numeric(20,2) NOT NULL)";
     private static final String CREATE_TRANS = "CREATE TABLE " + Tables.TABLE_NAME_TRANS + " ( "
             + Tables.COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
-            + Tables.COLUMN_TRANS_AMOUNT + " numeric(20,2) NOT NULL," + Tables.COLUMN_TRANS_INCOME + " boolean NOT NULL,"
-            + Tables.COLUMN_TRANS_DATE + " date NOT NULL," + Tables.COLUMN_TRANS_FK_POCKET + " integer NOT NULL,"
+            + Tables.COLUMN_TRANS_AMOUNT + " numeric(20,2) NOT NULL,"
+            + Tables.COLUMN_TRANS_INCOME + " boolean NOT NULL,"
+            + Tables.COLUMN_TRANS_DATE + " date NOT NULL,"
+            + Tables.COLUMN_TRANS_FK_POCKET + " integer NOT NULL,"
             + Tables.COLUMN_TRANS_FK_CAT + " integer NOT NULL,"
             + "CONSTRAINT FK_Pocket FOREIGN KEY ("+Tables.COLUMN_TRANS_FK_POCKET+") REFERENCES "
             + Tables.TABLE_NAME_POCKET+"("+Tables.COLUMN_ID+"),"
@@ -78,6 +80,12 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Tables.COLUMN_TRANS_INCOME,t.getIsIncome());
         db.insert(Tables.TABLE_NAME_TRANS,null,values);
         db.close();
+    }
+
+    public Cursor getTransactions(int pocketId){
+        return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_TRANS
+                + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
+                + " ORDER BY " + Tables.COLUMN_TRANS_DATE + " DESC", null);
     }
 
     public Cursor getPockets(){

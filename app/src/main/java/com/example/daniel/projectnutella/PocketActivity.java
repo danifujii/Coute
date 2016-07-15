@@ -1,6 +1,7 @@
 package com.example.daniel.projectnutella;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import com.example.daniel.projectnutella.adapter.PocketAdapter;
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
 import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Pocket;
@@ -33,6 +35,7 @@ public class PocketActivity extends AppCompatActivity {
 
     private int pocketId;
     private AlertDialog dialogAddTrans;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +58,22 @@ public class PocketActivity extends AppCompatActivity {
         setTitle(extras.getString("TITLE"));
         pocketId = extras.getInt("ID");
 
-        List<Transaction> testList = new ArrayList<>();
-        testList.add(new Transaction("500","10/6/2016",0,4,true));
-        testList.add(new Transaction("30","20/4/2016",0,2,false));
-        testList.add(new Transaction("15","21/5/2016",0,1,true));
+        DbHelper db = new DbHelper(this);
+        Cursor cursor = db.getTransactions(pocketId);
+        List<Transaction> transactions = new ArrayList<>();
+        while (cursor.moveToNext()){
+            transactions.add(new Transaction(cursor.getString(1),cursor.getString(3),
+                    cursor.getInt(4),cursor.getInt(5),cursor.getInt(2)>0));
+        }
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.history_recycler_view);
+        rv = (RecyclerView) findViewById(R.id.history_recycler_view);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
-        rv.setAdapter(new TransactionAdapter(testList,this));
+        rv.setAdapter(new TransactionAdapter(transactions,this));
 
-        setBalance(testList);
+        setBalance(transactions);
 
         findViewById(R.id.cats_detail_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +93,8 @@ public class PocketActivity extends AppCompatActivity {
             else net = net - Double.valueOf(t.getAmount());
         }
         TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
-        balanceTV.setText("$"+net);
+        if (balanceTV != null)
+            balanceTV.setText("$"+net);
     }
 
     public void addTransaction(){
@@ -103,8 +110,10 @@ public class PocketActivity extends AppCompatActivity {
                     int nroCat = ((LinearLayout) dialogAddTrans.findViewById(R.id.layoutAmounts)).getChildCount();
                     int cat = catSelected(nroCat);
                     if ( cat != -1 && !(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString().isEmpty())){
-                        Transaction newT = new Transaction(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString(),fecha,pocketId,cat,isIncome());
+                        Transaction newT = new Transaction(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString()
+                                ,fecha,pocketId,cat+1,isIncome());
                         db.insertTransaction(newT);
+                        updateRVAdapter();
                     }
                     else {
                         Toast toast = Toast.makeText(PocketActivity.this,
@@ -138,5 +147,17 @@ public class PocketActivity extends AppCompatActivity {
         return false; //Retorno falso por defecto
     }
 
+    private void updateRVAdapter()
+    {
+        List transactions = new ArrayList<>();
+        DbHelper db = new DbHelper(this);
+        Cursor cursor = db.getTransactions(pocketId);
+        while (cursor.moveToNext()){
+            transactions.add(new Transaction(cursor.getString(1),cursor.getString(3),
+                    cursor.getInt(4),cursor.getInt(5),cursor.getInt(2)>0));
+        }
+        cursor.close();
+        rv.setAdapter(new TransactionAdapter(transactions,this));
+    }
 }
 

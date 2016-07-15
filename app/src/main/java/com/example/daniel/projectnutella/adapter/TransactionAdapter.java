@@ -3,6 +3,7 @@ package com.example.daniel.projectnutella.adapter;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (t.getIsIncome())
             holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorIncome));
         else holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorExpense));
-        holder.dateTv.setText(t.getDate());
+
+        String date = t.getDate();
+        int spacePos = date.indexOf(" ");
+        Log.d("Space position",String.valueOf(spacePos));
+        if (spacePos>=0)
+            holder.dateTv.setText(date.substring(0,spacePos).replace('-','/'));
     }
 
     @Override
