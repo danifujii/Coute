@@ -68,15 +68,16 @@ public class MainActivity extends AppCompatActivity {
              public void onClick(DialogInterface dialog, int id) {
                  if (pocketDialogTV != null){
                      String pocket = pocketDialogTV.getText().toString();
-                     DbHelper db = new DbHelper(MainActivity.this);
-                     if (!db.existsPocket(pocket)) {
-                         db.insertPocket(pocket);
-                         updateRVAdapter();
-                     }
-                     else{
-                        Toast toast = Toast.makeText(MainActivity.this,
-                                getString(R.string.error_add_pocket), Toast.LENGTH_SHORT);
-                        toast.show();
+                     if (!pocket.isEmpty()) {
+                         DbHelper db = new DbHelper(MainActivity.this);
+                         if (!db.existsPocket(pocket)) {
+                             db.insertPocket(pocket);
+                             updateRVAdapter();
+                         } else {
+                             Toast toast = Toast.makeText(MainActivity.this,
+                                     getString(R.string.error_add_pocket), Toast.LENGTH_SHORT);
+                             toast.show();
+                         }
                      }
                  }
              }
@@ -161,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
 
     public Pocket getPocket(int pos){
         return pockets.get(pos);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateRVAdapter();
     }
 
     @Override

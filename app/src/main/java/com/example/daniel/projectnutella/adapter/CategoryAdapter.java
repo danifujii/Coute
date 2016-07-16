@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +25,11 @@ import java.util.List;
 /**
  * Created by Daniel on 13/7/2016.
  */
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private List<Transaction> catsList;
     private Activity act;
+    private int expandedPos = -1;
 
     public CategoryAdapter(Activity act, List<Transaction> pl){
         this.act = act;
@@ -48,6 +50,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             holder.nameTv.setText(catName.charAt(0)+catName.substring(1,catName.length()).toLowerCase());
         holder.sumTv.setText("$"+String.valueOf(t.getAmount()));
         holder.catIv.setImageDrawable(CategoryManager.getImage(act,t.getCat()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerView rv = (RecyclerView)v.getParent();
+                int newExpanded = rv.getChildAdapterPosition(v);
+                if (expandedPos >= 0)
+                    rv.getChildAt(expandedPos).findViewById(R.id.TEST_TV).setVisibility(View.GONE);
+                if (newExpanded != expandedPos) {
+                    v.findViewById(R.id.TEST_TV).setVisibility(View.VISIBLE);
+                    expandedPos = newExpanded;
+                } else expandedPos = -1;
+            }
+        });
     }
 
     @Override
@@ -63,11 +79,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         protected TextView nameTv;
         protected TextView sumTv;
         protected ImageView catIv;
+        protected TextView expandedTv;
+
         public CategoryViewHolder(View v){
             super(v);
             catIv = (ImageView) v.findViewById(R.id.cat_image_view);
             nameTv = (TextView) v.findViewById(R.id.cat_name_text_view);
             sumTv = (TextView) v.findViewById(R.id.cat_sum_text_view);
+            expandedTv = (TextView) v.findViewById(R.id.TEST_TV);
+
+            //v.findViewById(R.id.category_layout).setOnClickListener(new View.OnClickListener() {
+            //    @Override
+            //    public void onClick(View v) {
+            //        Log.d("Here","CLICKED!");
+            //        v.findViewById(R.id.TEST_TV).setVisibility(View.VISIBLE);
+            //    }
+            //});
         }
     }
 }

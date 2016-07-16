@@ -1,14 +1,22 @@
 package com.example.daniel.projectnutella;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.daniel.projectnutella.adapter.CategoryAdapter;
+import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Transaction;
 import com.example.daniel.projectnutella.graphic.ExpGraphicView;
 
@@ -19,19 +27,49 @@ public class CatsGraphActivity extends AppCompatActivity {
 
     private int pocketId;
     private List<Transaction> catsList;
+    private Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cats_graph);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pocketId = getIntent().getExtras().getInt("ID");
         setTitle(getString(R.string.expenses));
 
+        updateData(0);
+
+        sp = (Spinner)findViewById(R.id.filter_spinner);
+        if (sp != null){
+            List<String> filters = new ArrayList<>();
+            filters.add(getString(R.string.filter_all));
+            filters.add(getString(R.string.filter_week));
+            filters.add(getString(R.string.filter_month));
+            filters.add(getString(R.string.filter_year));
+            ArrayAdapter<String> filterAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_dropdown_item, filters);
+            sp.setAdapter(filterAdapter);
+
+            sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    updateData(position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+    }
+
+    private void updateData(int range){
+        DbHelper db = new DbHelper(this);
+        Cursor c = db.getTransGroupedCat(pocketId, db.RANGES[range]);
         catsList = new ArrayList<>();
-        catsList.add(new Transaction("500","",0,4,true));
-        catsList.add(new Transaction("30","",0,2,false));
-        catsList.add(new Transaction("15","",0,1,true));
+        while (c.moveToNext())
+            catsList.add(new Transaction(c.getString(0),"",0,c.getInt(1),true));
+        catsList.add(new Transaction("60","",0,3,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cats_recycler_view);
         rv.setHasFixedSize(true);

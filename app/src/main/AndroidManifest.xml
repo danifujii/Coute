@@ -21,11 +21,16 @@
         <activity
             android:name=".PocketActivity"
             android:label="@string/title_activity_pocket2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CatsGraphActivity"></activity>
+        <activity android:name=".CatsGraphActivity"
+            android:parentActivityName=".PocketActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

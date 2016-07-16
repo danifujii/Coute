@@ -1,11 +1,15 @@
 package com.example.daniel.projectnutella;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +20,9 @@ import android.text.Editable;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.DialogInterface;
@@ -77,14 +83,24 @@ public class PocketActivity extends AppCompatActivity {
 
         setBalance(transactions);
 
-        findViewById(R.id.cats_detail_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(PocketActivity.this,CatsGraphActivity.class);
-                i.putExtra("ID",pocketId);
-                startActivity(i);
-            }
-        });
+        ImageButton catsDetailButton = (ImageButton)findViewById(R.id.cats_detail_button);
+        if (catsDetailButton != null)
+            catsDetailButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        Intent i = new Intent(PocketActivity.this, CatsGraphActivity.class);
+                        i.putExtra("ID", pocketId);
+                        PendingIntent pendingIntent =
+                                TaskStackBuilder.create(PocketActivity.this)
+                                        .addNextIntentWithParentStack(getIntent())
+                                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(PocketActivity.this);
+                        builder.setContentIntent(pendingIntent);
+                        startActivity(i);
+                    }
+                }
+            });
     }
 
     public void setBalance(List<Transaction> transactions){
@@ -165,6 +181,8 @@ public class PocketActivity extends AppCompatActivity {
         }
         cursor.close();
         rv.setAdapter(new TransactionAdapter(transactions,this));
+
+        setBalance(transactions);
     }
 
     public void incomeClick(View v){

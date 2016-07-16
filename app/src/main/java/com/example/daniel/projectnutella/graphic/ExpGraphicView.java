@@ -25,19 +25,13 @@ import java.util.List;
  */
 public class ExpGraphicView extends View {
 
-    private List<Transaction> cats;
     private List<Pair<Rect,Paint>> rects = new ArrayList<>();
-    private double total;
-    private Paint fontPaint = new Paint();
 
     public ExpGraphicView(Context context, AttributeSet attributeSet){
         super(context,attributeSet);
     }
 
     public void setCategories(List<Transaction> categories, double total, double totalWidth){
-        this.cats = categories;
-        this.total = total;
-
         int suma = 0;
         for(Transaction t: categories){
             Paint p = new Paint();

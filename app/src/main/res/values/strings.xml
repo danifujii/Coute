@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Nutella</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_pocket2">Pocket2Activity</string>
+    <string name="title_activity_pocket2">PocketActivity</string>
     <string name="add_pocket_title">Add pocket</string>
     <string name="add_pocket_dialog">Insert pocket\'s name:</string>
     <string name="add_pocket_hint">Pocket\'s name</string>
@@ -15,4 +15,8 @@
     <string name="next">Continue</string>
     <string name="error_add_transaction">Error</string>
     <string name="expenses">Expenses</string>
+    <string name="filter_all">All</string>
+    <string name="filter_week">This week</string>
+    <string name="filter_month">This month</string>
+    <string name="filter_year">This year</string>
 </resources>
