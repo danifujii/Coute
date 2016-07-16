@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,7 +31,7 @@ public class ExpensesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cats_graph);
+        setContentView(R.layout.activity_expenses);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pocketId = getIntent().getExtras().getInt("ID");
         setTitle(getString(R.string.expenses));
