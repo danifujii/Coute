@@ -98,6 +98,46 @@
                 android:onClick="catClick"
                 />
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cat_fitness"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cat_travel"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cat_games"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cat_work"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cat_study"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
         </GridLayout>
 
     </LinearLayout>

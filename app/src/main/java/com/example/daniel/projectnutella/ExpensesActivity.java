@@ -70,7 +70,18 @@ public class ExpensesActivity extends AppCompatActivity {
             Log.d("UPDATE DATA",String.valueOf(c.getInt(0)));
             catsList.add(new Transaction(c.getString(0), "", 0, c.getInt(1), true));
         }
+        catsList.add(new Transaction("60","",0,1,true));
+        catsList.add(new Transaction("60","",0,2,true));
         catsList.add(new Transaction("60","",0,3,true));
+        catsList.add(new Transaction("60","",0,4,true));
+        catsList.add(new Transaction("60","",0,5,true));
+        catsList.add(new Transaction("60","",0,6,true));
+        catsList.add(new Transaction("60","",0,7,true));
+        catsList.add(new Transaction("60","",0,8,true));
+        catsList.add(new Transaction("60","",0,9,true));
+        catsList.add(new Transaction("60","",0,10,true));
+        catsList.add(new Transaction("60","",0,11,true));
+        catsList.add(new Transaction("60","",0,12,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cats_recycler_view);
         rv.setHasFixedSize(true);

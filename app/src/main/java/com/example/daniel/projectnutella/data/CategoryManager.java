@@ -20,6 +20,11 @@ public class CategoryManager {
     public static final String cat_car = "CAR";
     public static final String cat_shop = "SHOPPING";
     public static final String cat_transp = "TRANSPORT";
+    public static final String cat_fitness = "FITNESS";
+    public static final String cat_travel = "TRAVEL";
+    public static final String cat_games = "GAMES";
+    public static final String cat_work = "WORK";
+    public static final String cat_study = "STUDY";
 
     public static Drawable getImage(Activity act, int cat){
         DbHelper db = new DbHelper(act);
@@ -32,6 +37,11 @@ public class CategoryManager {
             case cat_car: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_oil,null);
             case cat_shop: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_shopping,null);
             case cat_transp: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_transport,null);
+            case cat_fitness: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_fitness,null);
+            case cat_travel: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_travel,null);
+            case cat_games: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_games,null);
+            case cat_work: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_work,null);
+            case cat_study: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_study,null);
         }
         return new ColorDrawable(Color.TRANSPARENT);
     }
@@ -46,21 +56,12 @@ public class CategoryManager {
         db.insertCategory(cat_car);
         db.insertCategory(cat_shop);
         db.insertCategory(cat_transp);
+        db.insertCategory(cat_fitness);
+        db.insertCategory(cat_travel);
+        db.insertCategory(cat_games);
+        db.insertCategory(cat_work);
+        db.insertCategory(cat_study);
         db.close();
-    }
-
-    public static int getCategoryId(Activity act, int idDrawable){
-        DbHelper db = new DbHelper(act);
-        switch(idDrawable){
-            case R.mipmap.cat_clothes: return db.getCategoryId(cat_clothes);
-            case R.mipmap.cat_drinks: return db.getCategoryId(cat_drinks);
-            case R.mipmap.cat_food: return db.getCategoryId(cat_food);
-            case R.mipmap.cat_house: return db.getCategoryId(cat_house);
-            case R.mipmap.cat_oil: return db.getCategoryId(cat_car);
-            case R.mipmap.cat_shopping: return db.getCategoryId(cat_shop);
-            case R.mipmap.cat_transport: return db.getCategoryId(cat_transp);
-        }
-        return 0;
     }
 
 }
