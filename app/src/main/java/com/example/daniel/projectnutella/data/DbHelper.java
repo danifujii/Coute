@@ -42,10 +42,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //HAVING CLAUSES FOR RANGES OF DATE
     public static final String[] RANGES = {"",
-        " HAVING DATE("+Tables.COLUMN_TRANS_DATE+") BETWEEN DATE('now', '-7 days') AND DATE('now');",
-        " HAVING strftime('%m', "+Tables.COLUMN_TRANS_DATE+") = strftime('%m', date('now')) " +
+        " AND DATE("+Tables.COLUMN_TRANS_DATE+") BETWEEN DATE('now', '-7 days') AND DATE('now')",
+        " AND strftime('%m', "+Tables.COLUMN_TRANS_DATE+") = strftime('%m', date('now')) " +
                 "AND strftime('%Y', "+Tables.COLUMN_TRANS_DATE+") = strftime('%Y', date('now'))",
-        " HAVING strftime('%Y', "+Tables.COLUMN_TRANS_DATE+") = strftime('%Y', date('now'))"
+        " AND strftime('%Y', "+Tables.COLUMN_TRANS_DATE+") = strftime('%Y', date('now'))"
     };
 
     public DbHelper(Context context){
@@ -103,9 +103,12 @@ public class DbHelper extends SQLiteOpenHelper {
     //get transactions grouped by category, but divided by expense and income
     public Cursor getTransGroupedCat(int pocketId, String range){
         return getWritableDatabase().rawQuery("SELECT SUM(" + Tables.COLUMN_TRANS_AMOUNT
-                + ")," + Tables.COLUMN_TRANS_FK_CAT + " FROM " + Tables.TABLE_NAME_TRANS
+                + ")," + Tables.COLUMN_TRANS_FK_CAT
+                + " FROM " + Tables.TABLE_NAME_TRANS
                 + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
-                + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT + range, null);
+                + range
+                + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT ,
+                 null);
     }
 
     public boolean existsPocket(String name){

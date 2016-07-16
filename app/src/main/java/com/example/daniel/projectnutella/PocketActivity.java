@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -16,11 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -28,10 +24,8 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
-import com.example.daniel.projectnutella.adapter.PocketAdapter;
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
 import com.example.daniel.projectnutella.data.DbHelper;
-import com.example.daniel.projectnutella.data.Pocket;
 import com.example.daniel.projectnutella.data.Transaction;
 
 import java.text.SimpleDateFormat;
@@ -89,7 +83,7 @@ public class PocketActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (Build.VERSION.SDK_INT >= 16) {
-                        Intent i = new Intent(PocketActivity.this, CatsGraphActivity.class);
+                        Intent i = new Intent(PocketActivity.this, ExpensesActivity.class);
                         i.putExtra("ID", pocketId);
                         PendingIntent pendingIntent =
                                 TaskStackBuilder.create(PocketActivity.this)
@@ -123,7 +117,7 @@ public class PocketActivity extends AppCompatActivity {
                 if (dialogAddTrans != null) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
-                    String fecha=dateFormat.format(date);
+                    String fecha = dateFormat.format(date);
                     DbHelper db = new DbHelper(PocketActivity.this);
                     int nroCat = ((LinearLayout) dialogAddTrans.findViewById(R.id.layoutAmounts)).getChildCount();
                     int cat = catSelected(nroCat);

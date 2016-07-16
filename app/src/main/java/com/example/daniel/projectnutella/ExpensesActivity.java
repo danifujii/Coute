@@ -23,7 +23,7 @@ import com.example.daniel.projectnutella.graphic.ExpGraphicView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatsGraphActivity extends AppCompatActivity {
+public class ExpensesActivity extends AppCompatActivity {
 
     private int pocketId;
     private List<Transaction> catsList;
@@ -65,10 +65,12 @@ public class CatsGraphActivity extends AppCompatActivity {
 
     private void updateData(int range){
         DbHelper db = new DbHelper(this);
-        Cursor c = db.getTransGroupedCat(pocketId, db.RANGES[range]);
+        Cursor c = db.getTransGroupedCat(pocketId, DbHelper.RANGES[range]);
         catsList = new ArrayList<>();
-        while (c.moveToNext())
-            catsList.add(new Transaction(c.getString(0),"",0,c.getInt(1),true));
+        while (c.moveToNext()) {
+            Log.d("UPDATE DATA",String.valueOf(c.getInt(0)));
+            catsList.add(new Transaction(c.getString(0), "", 0, c.getInt(1), true));
+        }
         catsList.add(new Transaction("60","",0,3,true));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cats_recycler_view);
@@ -84,8 +86,10 @@ public class CatsGraphActivity extends AppCompatActivity {
     private void setGraphic(){
         double total = getGastosTotal();
         ExpGraphicView egv = (ExpGraphicView) findViewById(R.id.expenses_graphic_view);
-        if (egv != null)
-            egv.setCategories(catsList,total,getScreenWidthDP());
+        if (egv != null) {
+            egv.setCategories(catsList, total, getScreenWidthDP());
+            egv.invalidate();
+        }
         TextView expensesTv = ((TextView)findViewById(R.id.expenses_text_view));
         if (expensesTv != null)
             expensesTv.setText("$"+String.valueOf(total));

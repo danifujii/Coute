@@ -56,15 +56,5 @@
 
     </RelativeLayout>
 
-        <TextView
-            android:id="@+id/TEST_TV"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Here"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-thin"/>
-
-
 </LinearLayout>
 

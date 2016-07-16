@@ -45,7 +45,6 @@ public class ExpGraphicView extends View {
 
             rects.add(new Pair<>(rect,p));
             suma = suma + width;
-
         }
     }
 
