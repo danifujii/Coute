@@ -3,10 +3,26 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#607D8B</color>
+
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBGGray">#ECEFF1</color>
     <color name="colorDarkGray">#5b5b5b</color>
     <color name="colorBlack">#191919</color>
+
     <color name="colorExpense">#F44336</color>
     <color name="colorIncome">#8BC34A</color>
+
+    <color name="cat_clothes">#006ca2</color>
+    <color name="cat_games">#40c0e7</color>
+    <color name="cat_work">#78a3ad</color>
+    <color name="cat_house">#ed6c30</color>
+    <color name="cat_drinks">#f79329</color>
+    <color name="cat_transp">#fcc21b</color>
+    <color name="cat_food">#fcdb8f</color>
+    <color name="cat_study">#d7598b</color>
+    <color name="cat_car">#8104af</color>
+    <color name="cat_fitness">#7c7d7d</color>
+    <color name="cat_shopping">#404b22</color>
+    <color name="cat_other">#bdcf46</color>
+
 </resources>

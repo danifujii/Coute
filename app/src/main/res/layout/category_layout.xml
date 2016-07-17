@@ -16,6 +16,13 @@
         android:layout_margin="1dp"
         android:background="@color/colorWhite">
 
+        <com.example.daniel.projectnutella.graphic.CatIndicator
+            android:id="@+id/indicator_view"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        
         <ImageView
             android:id="@+id/cat_image_view"
             android:layout_width="wrap_content"
@@ -23,9 +30,10 @@
             android:src="@mipmap/cat_drinks"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="16dp"
+            android:paddingLeft="5dp"
             android:maxWidth="8dp"
-            android:maxHeight="8dp"/>
+            android:maxHeight="8dp"
+            android:layout_toRightOf="@+id/indicator_view"/>
 
         <TextView
             android:id="@+id/cat_name_text_view"

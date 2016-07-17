@@ -146,7 +146,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/cat_oil"
+            android:src="@mipmap/cat_car"
             android:onClick="incomeClick"
             />
 
@@ -160,7 +160,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/cat_transport"
+            android:src="@mipmap/cat_transp"
             android:onClick="incomeClick"
             />
 

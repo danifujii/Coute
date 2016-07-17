@@ -77,7 +77,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/cat_oil"
+                android:src="@mipmap/cat_car"
                 android:backgroundTint="@color/colorPrimary"
                 android:onClick="catClick"
                 />
@@ -93,7 +93,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/cat_transport"
+                android:src="@mipmap/cat_transp"
                 android:backgroundTint="@color/colorPrimary"
                 android:onClick="catClick"
                 />
@@ -109,7 +109,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/cat_travel"
+                android:src="@mipmap/cat_other"
                 android:backgroundTint="@color/colorPrimary"
                 android:onClick="catClick"
                 />

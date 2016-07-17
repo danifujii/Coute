@@ -15,6 +15,7 @@ import android.util.Pair;
 import android.view.View;
 
 import com.example.daniel.projectnutella.data.CategoryManager;
+import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Transaction;
 
 import java.util.ArrayList;
@@ -35,13 +36,14 @@ public class ExpGraphicView extends View {
         int suma = 0;
         for(Transaction t: categories){
             Paint p = new Paint();
-            p.setColor(Palette.from(((BitmapDrawable)CategoryManager.getImage((Activity)getContext(),t.getCat())).getBitmap())
-                    .generate().getLightVibrantColor(0x000000));
+            //p.setColor(Palette.from(((BitmapDrawable)CategoryManager.getImage((Activity)getContext(),t.getCat())).getBitmap())
+                    //.generate().getLightVibrantColor(0x000000));
+            p.setColor(CategoryManager.getColor((Activity)getContext(),t.getCat()));
             p.setStyle(Paint.Style.FILL);
 
             int width = (int)((Double.valueOf(t.getAmount())/total) * totalWidth);
             Rect rect = new Rect();
-            rect.set(suma,0,suma+width+1,700);  //plus 1 because of the rounding done when converting from double to int
+            rect.set(suma,0,suma+width+5,700);  //plus 5 because of the rounding done when converting from double to int
 
             rects.add(new Pair<>(rect,p));
             suma = suma + width;

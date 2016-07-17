@@ -2,6 +2,7 @@ package com.example.daniel.projectnutella.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Pocket;
 import com.example.daniel.projectnutella.data.Transaction;
+import com.example.daniel.projectnutella.graphic.CatIndicator;
 
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             holder.nameTv.setText(catName.charAt(0)+catName.substring(1,catName.length()).toLowerCase());
         holder.sumTv.setText("$"+String.valueOf(t.getAmount()));
         holder.catIv.setImageDrawable(CategoryManager.getImage(act,t.getCat()));
+        holder.indicator.invalidate();
+        holder.indicator.setCategory(t.getCat());
+        holder.indicator.invalidate();
     }
 
     @Override
@@ -65,9 +70,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         protected TextView nameTv;
         protected TextView sumTv;
         protected ImageView catIv;
+        protected CatIndicator indicator;
 
         public CategoryViewHolder(View v){
             super(v);
+            indicator = (CatIndicator)v.findViewById(R.id.indicator_view);
             catIv = (ImageView) v.findViewById(R.id.cat_image_view);
             nameTv = (TextView) v.findViewById(R.id.cat_name_text_view);
             sumTv = (TextView) v.findViewById(R.id.cat_sum_text_view);

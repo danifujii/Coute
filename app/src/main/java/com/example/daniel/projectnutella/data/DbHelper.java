@@ -107,7 +107,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 + " FROM " + Tables.TABLE_NAME_TRANS
                 + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
                 + range
-                + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT ,
+                + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT
+                + " ORDER BY SUM(" + Tables.COLUMN_TRANS_AMOUNT + ") DESC",
                  null);
     }
 
