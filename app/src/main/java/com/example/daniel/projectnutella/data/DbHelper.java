@@ -137,14 +137,18 @@ public class DbHelper extends SQLiteOpenHelper {
         else return "";
     }
 
-    public int getCategoryId(String name){
-        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_CAT
-                + " WHERE " + Tables.COLUMN_CAT_NAME + "='" + name + "'", null);
-        if (cursor.getCount()>0) {
-            cursor.moveToFirst();
-            return Integer.valueOf(cursor.getString(1));
-        }
-        else return -1;
+    public Cursor getTransactions(int pocketId, String date){
+        return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_TRANS
+                + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId)
+                + "' AND date(" + Tables.COLUMN_TRANS_DATE + ")='" + date + "'", null);
+    }
+
+    public Cursor getDates(int pocketId){
+        return getWritableDatabase().rawQuery("SELECT DISTINCT date("
+                + Tables.COLUMN_TRANS_DATE + ") FROM " + Tables.TABLE_NAME_TRANS
+                + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
+                + " ORDER BY " + Tables.COLUMN_TRANS_DATE + " ASC"
+                ,null);
     }
 
     public void deletePocket(int id){

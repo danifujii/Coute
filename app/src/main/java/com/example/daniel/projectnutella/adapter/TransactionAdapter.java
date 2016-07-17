@@ -44,11 +44,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (t.getIsIncome())
             holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorIncome));
         else holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorExpense));
-
-        String date = t.getDate();
-        int spacePos = date.indexOf(" ");
-        if (spacePos>=0)
-            holder.dateTv.setText(date.substring(0,spacePos).replace('-','/'));
     }
 
     @Override
@@ -63,13 +58,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public static class TransactionViewHolder extends RecyclerView.ViewHolder{
         protected ImageView iv;
         protected TextView amountTv;
-        protected TextView dateTv;
 
         public TransactionViewHolder(View v){
             super(v);
             iv = (ImageView) v.findViewById(R.id.cat_image_view);
             amountTv = (TextView) v.findViewById(R.id.t_amount_text_view);
-            dateTv = (TextView) v.findViewById(R.id.t_date_text_view);
         }
     }
 }

@@ -31,15 +31,4 @@
         android:fontFamily="sans-serif-light"
         />
 
-    <TextView
-        android:id="@+id/t_date_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="20/15/2016"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:paddingTop="15dp"
-        android:paddingRight="16dp"
-        />
-
 </RelativeLayout>

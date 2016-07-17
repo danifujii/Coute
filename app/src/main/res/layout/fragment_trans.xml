@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.daniel.projectnutella.TransFragment">
+
+    <TextView
+        android:id="@+id/day_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="20/12/2016"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorBlack"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:fontFamily="sans-serif-light"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/history_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:background="@color/colorBGGray"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+</LinearLayout>

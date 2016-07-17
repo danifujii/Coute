@@ -7,9 +7,13 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +42,7 @@ public class PocketActivity extends AppCompatActivity {
     private int pocketId;
     private AlertDialog dialogAddTrans;
     private RecyclerView rv;
+    private DbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class PocketActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Setup FAB
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.pocket_fab);
         if (fab != null)
             fab.setOnClickListener(new View.OnClickListener() {
@@ -56,27 +62,19 @@ public class PocketActivity extends AppCompatActivity {
                 }
             });
 
+        //Get Intent data
         Bundle extras = getIntent().getExtras();
         setTitle(extras.getString("TITLE"));
         pocketId = extras.getInt("ID");
 
-        DbHelper db = new DbHelper(this);
-        Cursor cursor = db.getTransactions(pocketId);
-        List<Transaction> transactions = new ArrayList<>();
-        while (cursor.moveToNext()){
-            transactions.add(new Transaction(cursor.getString(1),cursor.getString(3),
-                    cursor.getInt(4),cursor.getInt(5),cursor.getInt(2)>0));
-        }
+        db = new DbHelper(this);
+        //Get all transactions for setting the balance
+        setBalance();
 
-        rv = (RecyclerView) findViewById(R.id.history_recycler_view);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
-        rv.setAdapter(new TransactionAdapter(transactions,this));
+        //Setup the ViewPager
+        updateViewPager();
 
-        setBalance(transactions);
-
+        //Setup Expenses graphic button
         ImageButton catsDetailButton = (ImageButton)findViewById(R.id.cats_detail_button);
         if (catsDetailButton != null)
             catsDetailButton.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +95,13 @@ public class PocketActivity extends AppCompatActivity {
             });
     }
 
-    public void setBalance(List<Transaction> transactions){
+    public void setBalance(){
+        Cursor cursor = db.getTransactions(pocketId);
         double net = 0.0;
-        for(Transaction t: transactions){
-            if (t.getIsIncome())
-                net = net + Double.valueOf(t.getAmount());
-            else net = net - Double.valueOf(t.getAmount());
+        while (cursor.moveToNext()){
+            if (cursor.getInt(2)>0)
+                net = net + Double.valueOf(cursor.getString(1));
+            else net = net - Double.valueOf(cursor.getString(1));
         }
         TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
         if (balanceTV != null)
@@ -115,17 +114,14 @@ public class PocketActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.add_button, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface d, int id) {
                 if (dialogAddTrans != null) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = new Date();
-                    String fecha = dateFormat.format(date);
-                    DbHelper db = new DbHelper(PocketActivity.this);
+                    String fecha = getCurrenDate(true);
                     int nroCat = ((LinearLayout) dialogAddTrans.findViewById(R.id.layoutAmounts)).getChildCount();
                     int cat = catSelected(nroCat);
                     if ( cat != -1 && !(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString().isEmpty())){
                         Transaction newT = new Transaction(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString()
                                 ,fecha,pocketId,cat+1,isIncome());
                         db.insertTransaction(newT);
-                        updateRVAdapter();
+                        updateViewPager();
                     }
                     else {
                         Toast toast = Toast.makeText(PocketActivity.this,
@@ -164,25 +160,64 @@ public class PocketActivity extends AppCompatActivity {
         return false; //Retorno falso por defecto
     }
 
-    private void updateRVAdapter()
+    private void updateViewPager()
     {
-        List transactions = new ArrayList<>();
-        DbHelper db = new DbHelper(this);
-        Cursor cursor = db.getTransactions(pocketId);
-        while (cursor.moveToNext()){
-            transactions.add(new Transaction(cursor.getString(1),cursor.getString(3),
-                    cursor.getInt(4),cursor.getInt(5),cursor.getInt(2)>0));
+        ViewPager mPager = (ViewPager)findViewById(R.id.day_pager);
+        if (mPager != null) {
+            DayTransPagerAdapter dpa = new DayTransPagerAdapter(getSupportFragmentManager());
+            dpa.setDates(db.getDates(pocketId));
+            mPager.setAdapter(dpa);
+            mPager.setCurrentItem(dpa.getCount()-1);
         }
-        cursor.close();
-        rv.setAdapter(new TransactionAdapter(transactions,this));
-
-        setBalance(transactions);
+        setBalance();
     }
 
     public void incomeClick(View v){
         if (!v.isSelected()) {   //By default buttons are not selected. To us, then this means its a used category
             v.getBackground().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
             v.setSelected(true);
+        }
+    }
+
+    public String getCurrenDate(boolean withTime){
+        SimpleDateFormat dateFormat;
+        if (withTime)
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        else dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    private class DayTransPagerAdapter extends FragmentStatePagerAdapter{
+        private Cursor dates;
+
+        public DayTransPagerAdapter(FragmentManager fm){ super (fm); }
+
+        public void setDates(Cursor c) { dates = c; }
+
+        @Override
+        public Fragment getItem(int position) {
+            TransFragment tf = new TransFragment();
+            if (dates.moveToPosition(position)) {
+                String date = dates.getString(0);
+                DbHelper db = new DbHelper(PocketActivity.this);
+                Cursor c = db.getTransactions(pocketId,date);
+                List<Transaction> transactions = new ArrayList<>();
+                while (c.moveToNext()) {
+                    transactions.add(new Transaction(c.getString(1), c.getString(3),
+                            c.getInt(4), c.getInt(5), c.getInt(2) > 0));
+                }
+                tf.setDate(date,transactions);
+            }
+            else
+                tf.setDate(getCurrenDate(false),new ArrayList<Transaction>());
+            return tf;
+        }
+
+        @Override
+        public int getCount() {
+            if (dates.getCount() > 0)
+                return dates.getCount();
+            else return 1;
         }
     }
 }

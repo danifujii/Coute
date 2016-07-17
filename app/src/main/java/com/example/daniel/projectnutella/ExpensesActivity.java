@@ -70,7 +70,6 @@ public class ExpensesActivity extends AppCompatActivity {
             Log.d("UPDATE DATA",String.valueOf(c.getInt(0)));
             catsList.add(new Transaction(c.getString(0), "", 0, c.getInt(1), true));
         }
-        catsList.add(new Transaction("60","",0,1,true));
         catsList.add(new Transaction("60","",0,2,true));
         catsList.add(new Transaction("60","",0,3,true));
         catsList.add(new Transaction("60","",0,4,true));
