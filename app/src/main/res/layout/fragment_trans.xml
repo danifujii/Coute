@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="20/12/2016"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/colorBlack"
         android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:fontFamily="sans-serif-light"
         />
 

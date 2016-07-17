@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +44,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String keyJump = sp.getString(getString(R.string.pref_jump_pockets),
+                "error");
+
+        if (!keyJump.equals(getString(R.string.pref_no_jump)) && !keyJump.equals("error")){
+            DbHelper db = new DbHelper(this);
+            Intent i = new Intent(this, PocketActivity.class);
+            i.putExtra("ID",Integer.valueOf(keyJump));
+            i.putExtra("TITLE",db.getPocketName(Integer.valueOf(keyJump)));
+            startActivity(i);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(getString(R.string.title_all_pockets));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
         if (fab!=null)
@@ -57,8 +72,13 @@ public class MainActivity extends AppCompatActivity {
             });
 
         CategoryManager.insertCategoriesIntoDB(this);
-
         setRecyclerView();
+        ImageButton settingsButton = (ImageButton)findViewById(R.id.settings_main_button);
+        if (settingsButton != null)
+            settingsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { startActivity(new Intent(MainActivity.this,SettingsActivity.class)); }
+            });
     }
 
      private void addPocket(){
@@ -173,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -186,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

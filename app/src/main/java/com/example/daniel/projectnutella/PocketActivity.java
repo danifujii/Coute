@@ -93,6 +93,15 @@ public class PocketActivity extends AppCompatActivity {
                     }
                 }
             });
+
+        ImageButton settingsButton = (ImageButton)findViewById(R.id.settings_pocket_button);
+        if (settingsButton != null)
+            settingsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(PocketActivity.this,SettingsActivity.class));
+                }
+            });
     }
 
     public void setBalance(){
@@ -103,6 +112,7 @@ public class PocketActivity extends AppCompatActivity {
                 net = net + Double.valueOf(cursor.getString(1));
             else net = net - Double.valueOf(cursor.getString(1));
         }
+        cursor.close();
         TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
         if (balanceTV != null)
             balanceTV.setText("$"+net);
@@ -207,6 +217,7 @@ public class PocketActivity extends AppCompatActivity {
                             c.getInt(4), c.getInt(5), c.getInt(2) > 0));
                 }
                 tf.setDate(date,transactions);
+                c.close();
             }
             else
                 tf.setDate(getCurrenDate(false),new ArrayList<Transaction>());

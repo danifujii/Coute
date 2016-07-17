@@ -115,7 +115,9 @@ public class DbHelper extends SQLiteOpenHelper {
     public boolean existsPocket(String name){
         Cursor cursor = getWritableDatabase().rawQuery("SELECT 1 FROM " + Tables.TABLE_NAME_POCKET
                     + " WHERE "+ Tables.COLUMN_POCKET_NAME + "='" + name + "'", null);
-        return (cursor.getCount()>0);
+        boolean exists = (cursor.getCount()>0);
+        cursor.close();
+        return (exists);
     }
 
     public String getPocketName(int id){

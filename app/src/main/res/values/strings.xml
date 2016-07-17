@@ -20,4 +20,12 @@
     <string name="filter_month">This month</string>
     <string name="filter_year">This year</string>
     <string name="Balance">Balance</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_all_pockets">All pockets</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title">Settings</string>
+    <string name="pref_jump_pockets">Start in pocket</string>
+    <string name="pref_no_jump">None</string>
+
 </resources>
