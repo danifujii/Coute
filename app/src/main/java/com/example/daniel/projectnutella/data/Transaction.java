@@ -1,5 +1,7 @@
 package com.example.daniel.projectnutella.data;
 
+import android.util.Log;
+
 /**
  * Created by Daniel on 12/7/2016.
  */

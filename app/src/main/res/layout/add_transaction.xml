@@ -4,166 +4,198 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New transaction"
-        android:id="@+id/textNewTransaction"
-        android:editable="true"
-        android:enabled="false"
-        android:padding="@dimen/abc_list_item_padding_horizontal_material"
-        android:textColor="@color/accent_material_light"
-        android:textSize="20dp" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/amountET"
-        android:hint="Amount"
+        android:id="@+id/amount_edit_text"
+        android:hint="@string/amount_hint"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
-        android:textSize="15dp" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="5dp"
+        android:inputType="numberDecimal"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:id="@+id/layoutAmounts">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$5"
-            android:id="@+id/buttonAmoun1"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="@color/colorPrimary"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$10"
-            android:textColor="@color/colorPrimary"
+            android:text="@string/value_0"
+            android:layout_weight="0.26"
+            android:id="@+id/buttonAmount1"
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/buttonAmount2" />
+            android:textColor="@color/colorBlack"
+            android:onClick="quickAddAmount"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$25"
-            android:textColor="@color/colorPrimary"
+            android:text="@string/value_1"
+            android:layout_weight="0.26"
+            android:textColor="@color/colorBlack"
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/buttonAmount3" />
+            android:id="@+id/buttonAmount2"
+            android:onClick="quickAddAmount"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$100"
-            android:textColor="@color/colorPrimary"
+            android:text="@string/value_2"
+            android:layout_weight="0.26"
+            android:textColor="@color/colorBlack"
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/buttonAmount4" />
+            android:id="@+id/buttonAmount3"
+            android:onClick="quickAddAmount"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_3"
+            android:layout_weight="0.26"
+            android:textColor="@color/colorBlack"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/buttonAmount4"
+            android:onClick="quickAddAmount"/>
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/add_trans_layout_income"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SPEND"
-            android:textColor="@color/colorWhite"
-            android:id="@+id/spendBT"
-            android:layout_weight="0.26"
-            android:allowUndo="false"
-            android:clickable="false"
-            android:backgroundTint="@color/colorPrimary"/>
-
+        android:gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GAIN"
-            android:id="@+id/gainBT"
+            android:text="@string/expense"
+            android:id="@+id/spend_button"
             android:layout_weight="0.26"
-            android:allowUndo="false" />
+            android:onClick="incomeClick"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/income"
+            android:id="@+id/gain_button"
+            android:layout_weight="0.26"
+            android:onClick="incomeClick"
+            />
+
     </LinearLayout>
 
-    <TextView
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Category"
-        android:id="@+id/textView"
-        android:textColor="@color/accent_material_light"
-        android:textSize="15dp" />
+        android:scrollbarSize="0dp">
 
-    <GridLayout
-        android:id="@+id/cat_grid_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:layout_gravity="center"
-        android:paddingTop="16dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/add_trans_layout_cats"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/cat_clothes"
-            android:onClick="incomeClick"
-            />
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_drinks"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_other"
+                android:onClick="categoryClick"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_food"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_clothes"
+                android:onClick="categoryClick"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_house"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_drinks"
+                android:onClick="categoryClick"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_car"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_food"
+                android:onClick="categoryClick"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_shopping"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_house"
+                android:onClick="categoryClick"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cat_transp"
-            android:onClick="incomeClick"
-            />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_car"
+                android:onClick="categoryClick"
+                />
 
-    </GridLayout>
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_shopping"
+                android:onClick="categoryClick"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_transp"
+                android:onClick="categoryClick"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_fitness"
+                android:onClick="categoryClick"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_games"
+                android:onClick="categoryClick"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_work"
+                android:onClick="categoryClick"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/cat_study"
+                android:onClick="categoryClick"
+                />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>

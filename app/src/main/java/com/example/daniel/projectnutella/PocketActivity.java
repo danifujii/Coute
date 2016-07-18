@@ -3,6 +3,7 @@ package com.example.daniel.projectnutella;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -114,8 +117,11 @@ public class PocketActivity extends AppCompatActivity {
         }
         cursor.close();
         TextView balanceTV = (TextView)findViewById(R.id.amountTextView);
-        if (balanceTV != null)
-            balanceTV.setText("$"+net);
+        if (balanceTV != null) {
+            if (net >= 0)
+                balanceTV.setText("$" + net);
+            else balanceTV.setText("-$" + Math.abs(net));
+        }
     }
 
     public void addTransaction(){
@@ -124,11 +130,11 @@ public class PocketActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.add_button, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface d, int id) {
                 if (dialogAddTrans != null) {
-                    String fecha = getCurrenDate(true);
-                    int nroCat = ((LinearLayout) dialogAddTrans.findViewById(R.id.layoutAmounts)).getChildCount();
-                    int cat = catSelected(nroCat);
-                    if ( cat != -1 && !(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString().isEmpty())){
-                        Transaction newT = new Transaction(((EditText) dialogAddTrans.findViewById(R.id.amountET)).getText().toString()
+                    String fecha = getCurrentDate(true);
+                    int cat = catSelected();
+                    String amount = ((EditText) dialogAddTrans.findViewById(R.id.amount_edit_text)).getText().toString();
+                    if ( cat != -1 && !amount.isEmpty()){
+                        Transaction newT = new Transaction(amount
                                 ,fecha,pocketId,cat+1,isIncome());
                         db.insertTransaction(newT);
                         updateViewPager();
@@ -150,24 +156,83 @@ public class PocketActivity extends AppCompatActivity {
         builder.setView(R.layout.add_transaction);
         dialogAddTrans = builder.create();
         dialogAddTrans.show();
+        ImageButton catButton = (ImageButton)((LinearLayout)dialogAddTrans.findViewById(R.id.add_trans_layout_cats)).getChildAt(0);
+        if (catButton!=null) { changeButtonBG(catButton,true); }
+        Button incomeButton = (Button)((LinearLayout)dialogAddTrans.findViewById(R.id.add_trans_layout_income)).getChildAt(0);
+        if (incomeButton!=null) {
+            changeButtonBG(incomeButton,true);
+            incomeButton.setTextColor(ContextCompat.getColor(this,R.color.colorWhite));
+        }
+        //dialogAddTrans.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
-    public int catSelected(int childCount){
-        for (int i = 0; i < childCount - 1; i++){
-            if (dialogAddTrans != null)
-                if (!((LinearLayout) dialogAddTrans.findViewById(R.id.layoutAmounts)).getChildAt(i).isSelected())
+    //Get the category that was selected in the Add Transaction Dialog
+    public int catSelected(){
+        if (dialogAddTrans != null) {
+            LinearLayout ll = (LinearLayout) dialogAddTrans.findViewById(R.id.add_trans_layout_cats);
+            if (ll != null)
+            for (int i = 0; i < ll.getChildCount(); i++) {
+                if (ll.getChildAt(i).isSelected())
                     return i;
+            }
         }
         return -1;
     }
 
+    public void categoryClick(View v){
+        if (!v.isSelected()){
+            LinearLayout ll = (LinearLayout)v.getParent();
+            for (int i = 0; i < ll.getChildCount(); i++){
+                View button = ll.getChildAt(i);
+                changeButtonBG(button,false);
+            }
+            changeButtonBG(v,true);
+        }
+    }
+
+    public void incomeClick(View v)
+    {
+        if (!v.isSelected()) {
+            categoryClick(v);
+            LinearLayout ll = (LinearLayout) v.getParent();
+            for (int i = 0; i < ll.getChildCount(); i++) {
+                Button button = (Button) ll.getChildAt(i);
+                button.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
+            }
+            ((Button)v).setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
+        }
+    }
+
+    public void changeButtonBG(View v, boolean active){
+        if (active){
+            v.getBackground().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+            v.setSelected(true);
+        }
+        else{
+            v.getBackground().setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY);
+            v.setSelected(false);
+        }
+    }
+
     public boolean isIncome() {
         if (dialogAddTrans != null)
-            if (dialogAddTrans.findViewById(R.id.spendBT).isSelected())
-                return false;
-            else
-                return true;
+            return (dialogAddTrans.findViewById(R.id.gain_button).isSelected());
         return false; //Retorno falso por defecto
+    }
+
+    public void quickAddAmount(View v){
+        String text = ((Button)v).getText().toString();
+        double amount = Double.valueOf(text.substring(1,text.length()));    //remove the $ sign
+        if (dialogAddTrans != null){
+            TextView amountTV = (TextView)dialogAddTrans.findViewById(R.id.amount_edit_text);
+            String currentAmount = amountTV.getText().toString();
+            if (currentAmount.isEmpty())
+                amountTV.setText(String.valueOf(amount));
+            else{
+                double current = Double.valueOf(currentAmount);
+                amountTV.setText(String.valueOf(current + amount));
+            }
+        }
     }
 
     private void updateViewPager()
@@ -182,14 +247,7 @@ public class PocketActivity extends AppCompatActivity {
         setBalance();
     }
 
-    public void incomeClick(View v){
-        if (!v.isSelected()) {   //By default buttons are not selected. To us, then this means its a used category
-            v.getBackground().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-            v.setSelected(true);
-        }
-    }
-
-    public String getCurrenDate(boolean withTime){
+    public String getCurrentDate(boolean withTime){
         SimpleDateFormat dateFormat;
         if (withTime)
             dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,14 +271,14 @@ public class PocketActivity extends AppCompatActivity {
                 Cursor c = db.getTransactions(pocketId,date);
                 List<Transaction> transactions = new ArrayList<>();
                 while (c.moveToNext()) {
-                    transactions.add(new Transaction(c.getString(1), c.getString(3),
+                    transactions.add(new Transaction(String.valueOf(c.getDouble(1)), c.getString(3),
                             c.getInt(4), c.getInt(5), c.getInt(2) > 0));
                 }
                 tf.setDate(date,transactions);
                 c.close();
             }
             else
-                tf.setDate(getCurrenDate(false),new ArrayList<Transaction>());
+                tf.setDate(getCurrentDate(false),new ArrayList<Transaction>());
             return tf;
         }
 

@@ -12,7 +12,7 @@ import android.util.Log;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "Nutella.db";
 
     //TABLE COLUMNS
@@ -27,7 +27,7 @@ public class DbHelper extends SQLiteOpenHelper {
             + Tables.COLUMN_POCKET_NAME + " varchar(60) NOT NULL," + Tables.COLUMN_POCKET_BALANCE + " numeric(20,2) NOT NULL)";
     private static final String CREATE_TRANS = "CREATE TABLE " + Tables.TABLE_NAME_TRANS + " ( "
             + Tables.COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
-            + Tables.COLUMN_TRANS_AMOUNT + " numeric(20,2) NOT NULL,"
+            + Tables.COLUMN_TRANS_AMOUNT + " real NOT NULL,"
             + Tables.COLUMN_TRANS_INCOME + " boolean NOT NULL,"
             + Tables.COLUMN_TRANS_DATE + " date NOT NULL,"
             + Tables.COLUMN_TRANS_FK_POCKET + " integer NOT NULL,"
@@ -81,6 +81,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void insertTransaction(Transaction t){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
+        Log.d("DBHELPER",t.getAmount());
         values.put(Tables.COLUMN_TRANS_AMOUNT,t.getAmount());
         values.put(Tables.COLUMN_TRANS_DATE,t.getDate());
         values.put(Tables.COLUMN_TRANS_FK_CAT,t.getCat());
@@ -93,6 +94,13 @@ public class DbHelper extends SQLiteOpenHelper {
     public Cursor getTransactions(int pocketId){
         return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_TRANS
                 + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
+                + " ORDER BY " + Tables.COLUMN_TRANS_DATE + " DESC", null);
+    }
+
+    public Cursor getTransactions(int pocketId, String date){
+        return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_TRANS
+                + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId)
+                + "' AND date(" + Tables.COLUMN_TRANS_DATE + ")='" + date + "' "
                 + " ORDER BY " + Tables.COLUMN_TRANS_DATE + " DESC", null);
     }
 
@@ -138,12 +146,6 @@ public class DbHelper extends SQLiteOpenHelper {
             return cursor.getString(1);
         }
         else return "";
-    }
-
-    public Cursor getTransactions(int pocketId, String date){
-        return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_TRANS
-                + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId)
-                + "' AND date(" + Tables.COLUMN_TRANS_DATE + ")='" + date + "'", null);
     }
 
     public Cursor getDates(int pocketId){

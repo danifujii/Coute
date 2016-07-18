@@ -50,6 +50,7 @@ public class CategoryManager {
     public static void insertCategoriesIntoDB(Activity act){
         DbHelper db = new DbHelper(act);
         db.getWritableDatabase();
+        db.insertCategory(cat_other);
         db.insertCategory(cat_clothes);
         db.insertCategory(cat_drinks);
         db.insertCategory(cat_food);
@@ -58,7 +59,6 @@ public class CategoryManager {
         db.insertCategory(cat_shop);
         db.insertCategory(cat_transp);
         db.insertCategory(cat_fitness);
-        db.insertCategory(cat_other);
         db.insertCategory(cat_games);
         db.insertCategory(cat_work);
         db.insertCategory(cat_study);

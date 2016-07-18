@@ -45,6 +45,14 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@mipmap/cat_other"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="catClick"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/cat_clothes"
                 android:backgroundTint="@color/colorPrimary"
                 android:onClick="catClick"
@@ -102,14 +110,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/cat_fitness"
-                android:backgroundTint="@color/colorPrimary"
-                android:onClick="catClick"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cat_other"
                 android:backgroundTint="@color/colorPrimary"
                 android:onClick="catClick"
                 />
