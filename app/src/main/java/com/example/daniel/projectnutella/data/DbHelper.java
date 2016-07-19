@@ -114,6 +114,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + ")," + Tables.COLUMN_TRANS_FK_CAT
                 + " FROM " + Tables.TABLE_NAME_TRANS
                 + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
+                + " AND " + Tables.COLUMN_TRANS_INCOME + "='false'"
                 + range
                 + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT
                 + " ORDER BY SUM(" + Tables.COLUMN_TRANS_AMOUNT + ") DESC",
@@ -146,6 +147,16 @@ public class DbHelper extends SQLiteOpenHelper {
             return cursor.getString(1);
         }
         else return "";
+    }
+
+    public int getCategoryId(String name){
+        Cursor cursor = getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_CAT
+                + " WHERE " + Tables.COLUMN_CAT_NAME + "='" + name + "'", null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        else return -1;
     }
 
     public Cursor getDates(int pocketId){

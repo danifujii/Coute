@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.widget.Toast;
 
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
+import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.data.Transaction;
 
@@ -131,11 +132,17 @@ public class PocketActivity extends AppCompatActivity {
             public void onClick(DialogInterface d, int id) {
                 if (dialogAddTrans != null) {
                     String fecha = getCurrentDate(true);
-                    int cat = catSelected();
                     String amount = ((EditText) dialogAddTrans.findViewById(R.id.amount_edit_text)).getText().toString();
-                    if ( cat != -1 && !amount.isEmpty()){
-                        Transaction newT = new Transaction(amount
-                                ,fecha,pocketId,cat+1,isIncome());
+                    if (!amount.isEmpty()){
+                        Transaction newT;
+                        if (isIncome())
+                            newT = new Transaction(0,amount
+                                    ,fecha,pocketId,db.getCategoryId(CategoryManager.cat_income),true);
+                        else{
+                            int cat = catSelected();
+                            newT = new Transaction(0,amount
+                                    ,fecha,pocketId,cat+1,false);
+                        }
                         db.insertTransaction(newT);
                         updateViewPager();
                     }
@@ -200,6 +207,10 @@ public class PocketActivity extends AppCompatActivity {
                 button.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
             }
             ((Button)v).setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
+
+            if (v.getId()==R.id.gain_button)
+                dialogAddTrans.findViewById(R.id.add_trans_layout_cats).setVisibility(View.GONE);
+            else dialogAddTrans.findViewById(R.id.add_trans_layout_cats).setVisibility(View.VISIBLE);
         }
     }
 
@@ -255,6 +266,7 @@ public class PocketActivity extends AppCompatActivity {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
     private class DayTransPagerAdapter extends FragmentStatePagerAdapter{
         private Cursor dates;
 
@@ -271,7 +283,8 @@ public class PocketActivity extends AppCompatActivity {
                 Cursor c = db.getTransactions(pocketId,date);
                 List<Transaction> transactions = new ArrayList<>();
                 while (c.moveToNext()) {
-                    transactions.add(new Transaction(String.valueOf(c.getDouble(1)), c.getString(3),
+                    transactions.add(new Transaction(c.getInt(0)
+                            ,String.valueOf(c.getDouble(1)), c.getString(3),
                             c.getInt(4), c.getInt(5), c.getInt(2) > 0));
                 }
                 tf.setDate(date,transactions);

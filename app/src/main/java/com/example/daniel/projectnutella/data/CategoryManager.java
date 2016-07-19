@@ -26,6 +26,7 @@ public class CategoryManager {
     public static final String cat_work = "WORK";
     public static final String cat_study = "STUDY";
     public static final String cat_other = "OTHER";
+    public static final String cat_income = "INCOME";
 
     public static Drawable getImage(Activity act, int cat){
         DbHelper db = new DbHelper(act);
@@ -43,6 +44,7 @@ public class CategoryManager {
             case cat_games: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_games,null);
             case cat_work: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_work,null);
             case cat_study: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_study,null);
+            case cat_income: return ResourcesCompat.getDrawable(act.getResources(),R.mipmap.cat_income,null);
         }
         return new ColorDrawable(Color.TRANSPARENT);
     }
@@ -62,6 +64,7 @@ public class CategoryManager {
         db.insertCategory(cat_games);
         db.insertCategory(cat_work);
         db.insertCategory(cat_study);
+        db.insertCategory(cat_income);
         db.close();
     }
 

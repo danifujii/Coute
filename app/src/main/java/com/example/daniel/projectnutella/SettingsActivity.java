@@ -74,8 +74,9 @@ public class SettingsActivity extends PreferenceActivity{
 
             jumpLP = (ListPreference)findPreference(getString(R.string.pref_jump_pockets));
             jumpLP.setEntries(entries);
-            jumpLP.setDefaultValue(getString(R.string.pref_no_jump));
+
             jumpLP.setEntryValues(entryValues);
+            jumpLP.setValueIndex(0);
         }
     }
 }

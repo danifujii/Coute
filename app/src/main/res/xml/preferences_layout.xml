@@ -4,6 +4,6 @@
     <ListPreference
         android:key="@string/pref_jump_pockets"
         android:title="@string/pref_jump_pockets"
-        android:summary="%s"/>
+        android:summary="%s" />
 
 </PreferenceScreen>
