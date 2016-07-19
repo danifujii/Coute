@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/t_amount_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="-$50"
         android:textColor="@color/colorBlack"
         android:textSize="24sp"
@@ -29,6 +29,19 @@
         android:paddingLeft="15dp"
         android:gravity="center_vertical"
         android:layout_toRightOf="@+id/cat_image_view"
+        android:fontFamily="sans-serif-light"
+        />
+
+    <TextView
+        android:id="@+id/t_descr_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Income"
+        android:layout_toRightOf="@+id/t_amount_text_view"
+        android:gravity="center_vertical"
+        android:paddingTop="11dp"
+        android:textSize="20sp"
+        android:paddingLeft="16dp"
         android:fontFamily="sans-serif-light"
         />
 

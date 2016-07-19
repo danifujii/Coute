@@ -12,14 +12,16 @@ public class Transaction {
     protected int pocket;
     protected int cat;
     protected boolean isIncome;
+    protected String descr;
 
-    public Transaction(int id, String amount, String date, int pocket, int cat, boolean isIncome){
+    public Transaction(int id, String amount, String date, int pocket, int cat, boolean isIncome, String descr){
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.pocket = pocket;
         this.cat = cat;
         this.isIncome = isIncome;
+        this.descr = descr;
     }
 
     public int getId() {
@@ -43,4 +45,8 @@ public class Transaction {
     }
 
     public boolean getIsIncome() { return isIncome; }
+
+    public String getDescr() {
+        return descr;
+    }
 }

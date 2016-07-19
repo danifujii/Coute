@@ -67,7 +67,7 @@ public class ExpensesActivity extends AppCompatActivity {
         Cursor c = db.getTransGroupedCat(pocketId, DbHelper.RANGES[range]);
         catsList = new ArrayList<>();
         while (c.moveToNext())
-            catsList.add(new Transaction(0,c.getString(0), "", 0, c.getInt(1), true));
+            catsList.add(new Transaction(0,c.getString(0), "", 0, c.getInt(1), true, ""));
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.cats_recycler_view);
         rv.setHasFixedSize(true);

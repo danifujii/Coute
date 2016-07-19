@@ -50,6 +50,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.iv.setImageDrawable(CategoryManager.getImage(act,t.getCat()));
         holder.amountTv.setText(t.getAmount());
+        holder.descrTv.setText(t.getDescr());
         if (t.getIsIncome())
             holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorIncome));
         else holder.amountTv.setTextColor(ContextCompat.getColor(holder.amountTv.getContext(),R.color.colorExpense));
@@ -98,12 +99,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         protected ImageView iv;
         protected TextView amountTv;
         protected RelativeLayout rl;
+        protected TextView descrTv;
 
         public TransactionViewHolder(View v){
             super(v);
             rl = (RelativeLayout) v.findViewById(R.id.trans_relative_layout);
             iv = (ImageView) v.findViewById(R.id.cat_image_view);
             amountTv = (TextView) v.findViewById(R.id.t_amount_text_view);
+            descrTv = (TextView) v.findViewById(R.id.t_descr_text_view);
         }
     }
 }

@@ -12,7 +12,7 @@ import android.util.Log;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Nutella.db";
 
     //TABLE COLUMNS
@@ -29,6 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
             + Tables.COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
             + Tables.COLUMN_TRANS_AMOUNT + " real NOT NULL,"
             + Tables.COLUMN_TRANS_INCOME + " boolean NOT NULL,"
+            + Tables.COLUMN_TRANS_DESCR + " text NOT NULL, "
             + Tables.COLUMN_TRANS_DATE + " date NOT NULL,"
             + Tables.COLUMN_TRANS_FK_POCKET + " integer NOT NULL,"
             + Tables.COLUMN_TRANS_FK_CAT + " integer NOT NULL,"
@@ -81,10 +82,10 @@ public class DbHelper extends SQLiteOpenHelper {
     public void insertTransaction(Transaction t){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        Log.d("DBHELPER",t.getAmount());
         values.put(Tables.COLUMN_TRANS_AMOUNT,t.getAmount());
         values.put(Tables.COLUMN_TRANS_DATE,t.getDate());
         values.put(Tables.COLUMN_TRANS_FK_CAT,t.getCat());
+        values.put(Tables.COLUMN_TRANS_DESCR,t.getDescr());
         values.put(Tables.COLUMN_TRANS_FK_POCKET,t.getPocket());
         values.put(Tables.COLUMN_TRANS_INCOME,t.getIsIncome());
         db.insert(Tables.TABLE_NAME_TRANS,null,values);
@@ -205,6 +206,7 @@ public class DbHelper extends SQLiteOpenHelper {
         public static String COLUMN_TRANS_AMOUNT = "amount";
         public static String COLUMN_TRANS_INCOME = "income";
         public static String COLUMN_TRANS_DATE = "dat";
+        public static String COLUMN_TRANS_DESCR = "description";
         public static String COLUMN_TRANS_FK_POCKET = "_id_pocket";
         public static String COLUMN_TRANS_FK_CAT = "_id_cat";
 

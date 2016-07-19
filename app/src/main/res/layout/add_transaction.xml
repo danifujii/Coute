@@ -4,18 +4,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
+    <LinearLayout
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/amount_edit_text"
-        android:hint="@string/amount_hint"
-        android:layout_gravity="center_horizontal"
-        android:singleLine="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="5dp"
-        android:inputType="numberDecimal"
-        android:textSize="18sp" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/amount_edit_text"
+            android:hint="@string/amount_hint"
+            android:layout_gravity="center_horizontal"
+            android:singleLine="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:inputType="numberDecimal"
+            android:textSize="20sp"
+            android:layout_weight="3"/>
+
+        <EditText
+            android:id="@+id/descr_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/descr_hint"
+            android:singleLine="true"
+            android:layout_weight="7"
+            android:textSize="20sp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            />
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:orientation="horizontal"

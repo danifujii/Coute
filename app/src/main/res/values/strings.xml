@@ -13,6 +13,7 @@
     <string name="next">Continue</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="descr_hint">Description</string>
 
     <!-- MESSAGES -->
     <string name="add_pocket_dialog">Insert pocket\'s name:</string>

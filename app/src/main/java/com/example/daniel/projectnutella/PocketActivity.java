@@ -133,15 +133,17 @@ public class PocketActivity extends AppCompatActivity {
                 if (dialogAddTrans != null) {
                     String fecha = getCurrentDate(true);
                     String amount = ((EditText) dialogAddTrans.findViewById(R.id.amount_edit_text)).getText().toString();
+                    String descr = ((EditText)dialogAddTrans.findViewById(R.id.descr_edit_text)).getText().toString();
                     if (!amount.isEmpty()){
                         Transaction newT;
                         if (isIncome())
                             newT = new Transaction(0,amount
-                                    ,fecha,pocketId,db.getCategoryId(CategoryManager.cat_income),true);
+                                    ,fecha,pocketId,db.getCategoryId(CategoryManager.cat_income)
+                                    ,true,descr);
                         else{
                             int cat = catSelected();
                             newT = new Transaction(0,amount
-                                    ,fecha,pocketId,cat+1,false);
+                                    ,fecha,pocketId,cat+1,false,descr);
                         }
                         db.insertTransaction(newT);
                         updateViewPager();
@@ -284,8 +286,9 @@ public class PocketActivity extends AppCompatActivity {
                 List<Transaction> transactions = new ArrayList<>();
                 while (c.moveToNext()) {
                     transactions.add(new Transaction(c.getInt(0)
-                            ,String.valueOf(c.getDouble(1)), c.getString(3),
-                            c.getInt(4), c.getInt(5), c.getInt(2) > 0));
+                            ,String.valueOf(c.getDouble(1)), c.getString(4),
+                            c.getInt(5), c.getInt(6), c.getInt(2) > 0,
+                            c.getString(3)));
                 }
                 tf.setDate(date,transactions);
                 c.close();
