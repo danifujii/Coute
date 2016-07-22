@@ -2,11 +2,13 @@ package com.example.daniel.projectnutella;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -127,7 +129,7 @@ public class PocketActivity extends AppCompatActivity {
 
     public void addTransaction(){
         AlertDialog.Builder builder = new AlertDialog.Builder(PocketActivity.this);
-        builder.setTitle("Add Transaction");
+        builder.setTitle(getString(R.string.add_transaction));
         builder.setPositiveButton(R.string.add_button, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface d, int id) {
                 if (dialogAddTrans != null) {
@@ -163,8 +165,18 @@ public class PocketActivity extends AppCompatActivity {
             }
         });
         builder.setView(R.layout.add_transaction);
+
         dialogAddTrans = builder.create();
         dialogAddTrans.show();
+
+        //Read preferencies and activate just those buttons
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        LinearLayout buttonsLL = (LinearLayout)dialogAddTrans.findViewById(R.id.add_trans_layout_cats);
+        if (buttonsLL != null)
+        for (int i = 0 ; i < buttonsLL.getChildCount(); i++)
+            if (!sp.getBoolean(WelcomeActivity.catPref + String.valueOf(i), false))
+                (buttonsLL.getChildAt(i)).setVisibility(View.GONE);
+
         ImageButton catButton = (ImageButton)((LinearLayout)dialogAddTrans.findViewById(R.id.add_trans_layout_cats)).getChildAt(0);
         if (catButton!=null) { changeButtonBG(catButton,true); }
         Button incomeButton = (Button)((LinearLayout)dialogAddTrans.findViewById(R.id.add_trans_layout_income)).getChildAt(0);

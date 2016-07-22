@@ -6,4 +6,8 @@
         android:title="@string/pref_jump_pockets"
         android:summary="%s" />
 
+    <MultiSelectListPreference
+        android:title="@string/pref_cats_enabled"
+        android:key="@string/pref_cats_enabled"/>
+
 </PreferenceScreen>

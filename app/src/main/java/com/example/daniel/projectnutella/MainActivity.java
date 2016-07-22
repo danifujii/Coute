@@ -140,43 +140,20 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
+        updateRVAdapter();
+    }
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return true;
-            }
+    public void updatePocket(int pocketPos, String newName){
+        DbHelper db = new DbHelper(MainActivity.this);
+        Pocket p = pockets.get(pocketPos);
+        db.updatePocket(p.getId(),newName);
+        updateRVAdapter();
+    }
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                swipedCard = viewHolder.getLayoutPosition();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage(getString(R.string.delete_dialog))
-                        .setPositiveButton(R.string.delete_button, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (swipedCard != -1) {
-                                    DbHelper db = new DbHelper(MainActivity.this);
-                                    Pocket p = pockets.get(swipedCard);
-                                    db.deletePocket(p.getId());
-                                    updateRVAdapter();
-                                    swipedCard = -1;
-                                }
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                updateRVAdapter();
-                            }
-                        });
-                builder.create().show();
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(rv);
+    public void deletePocket(int pocketPos){
+        DbHelper db = new DbHelper(MainActivity.this);
+        Pocket p = pockets.get(pocketPos);
+        db.deletePocket(p.getId());
         updateRVAdapter();
     }
 

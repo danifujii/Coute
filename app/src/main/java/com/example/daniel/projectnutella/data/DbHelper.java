@@ -109,13 +109,17 @@ public class DbHelper extends SQLiteOpenHelper {
         return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_POCKET, null);
     }
 
+    public Cursor getCategories(){
+        return getWritableDatabase().rawQuery("SELECT * FROM " + Tables.TABLE_NAME_CAT, null);
+    }
+
     //get transactions grouped by category, but divided by expense and income
     public Cursor getTransGroupedCat(int pocketId, String range){
         return getWritableDatabase().rawQuery("SELECT SUM(" + Tables.COLUMN_TRANS_AMOUNT
                 + ")," + Tables.COLUMN_TRANS_FK_CAT
                 + " FROM " + Tables.TABLE_NAME_TRANS
                 + " WHERE " + Tables.COLUMN_TRANS_FK_POCKET + "='" + String.valueOf(pocketId) + "'"
-                + " AND " + Tables.COLUMN_TRANS_INCOME + "='false'"
+                + " AND NOT " + Tables.COLUMN_TRANS_INCOME
                 + range
                 + " GROUP BY " + Tables.COLUMN_TRANS_FK_CAT
                 + " ORDER BY SUM(" + Tables.COLUMN_TRANS_AMOUNT + ") DESC",
@@ -183,6 +187,16 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(tableName,
                 columnName + "=?",
                 selectionArgs);
+        db.close();
+    }
+
+    public void updatePocket(int id, String newName){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        //values.put(Tables.COLUMN_ID,id);
+        values.put(Tables.COLUMN_POCKET_NAME,newName);
+        values.put(Tables.COLUMN_POCKET_BALANCE,0.0);
+        db.update(Tables.TABLE_NAME_POCKET,values,Tables.COLUMN_ID + "=" + String.valueOf(id), null);
         db.close();
     }
 

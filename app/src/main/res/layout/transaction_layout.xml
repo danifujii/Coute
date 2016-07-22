@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:layout_marginBottom="1dp"
-    android:id="@+id/trans_relative_layout"
->
+    android:id="@+id/trans_relative_layout">
 
     <ImageView
         android:id="@+id/cat_image_view"
@@ -22,6 +21,7 @@
         android:id="@+id/t_amount_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="80dp"
         android:text="-$50"
         android:textColor="@color/colorBlack"
         android:textSize="24sp"

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.media.Image;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Si ya eligio las categorias, saltar esta pantalla
-        SharedPreferences sp = getSharedPreferences(MainActivity.prefsName,MODE_PRIVATE);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
         if (sp.getBoolean(loguedPref,false)) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
@@ -42,12 +43,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 //Save preferences
                 GridLayout gl = (GridLayout) findViewById(R.id.cat_grid_layout);
                 if (gl != null) {
-                    SharedPreferences sp = getSharedPreferences(MainActivity.prefsName,MODE_PRIVATE);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
                     SharedPreferences.Editor editor = sp.edit();
                     for (int i = 0; i < gl.getChildCount(); i++) {
                         ImageButton ib = (ImageButton) gl.getChildAt(i);
                         if (ib != null)
-                            editor.putBoolean(catPref+String.valueOf(i),!ib.isSelected());
+                            editor.putBoolean(catPref + String.valueOf(i), !ib.isSelected());
                     }
                     editor.putBoolean(loguedPref,true);
                     editor.apply();

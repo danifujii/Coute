@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Nutella</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_pocket2">PocketActivity</string>
+
+    <!-- DIALOGS BUTTONS AND TITLES -->
+    <string name="add_pocket_title">Añadir bolsillo</string>
+    <string name="add_pocket_hint">Nombre de bolsillo</string>
+    <string name="add_button">Añadir</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="delete_button">Borrar</string>
+    <string name="amount_hint">Cantidad</string>
+    <string name="next">Continuar</string>
+    <string name="expense">Gasto</string>
+    <string name="income">Ingreso</string>
+    <string name="descr_hint">Descripción</string>
+
+    <!-- MESSAGES -->
+    <string name="add_pocket_dialog">Ingresar nombre del bolsillo:</string>
+    <string name="delete_dialog">Quiere borrar?</string>
+    <string name="error_add_pocket">Ese bolsillo ya existe</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="welcome_message">Por favor deseleccione las categorias que no va a necesitar.</string>
+    <string name="error_add_transaction">Error</string>
+    <string name="expenses">Gastos</string>
+
+    <!-- OPTIONS -->
+    <string name="filter_all">Todo</string>
+    <string name="filter_week">Esta semana</string>
+    <string name="filter_month">Este mes</string>
+    <string name="filter_year">Este año</string>
+    <string name="Balance">Balance</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="title_all_pockets">Todos los bolsillos</string>
+    <string name="value_0">$5</string>
+    <string name="value_1">$10</string>
+    <string name="value_2">$25</string>
+    <string name="value_3">$100</string>
+
+    <!-- SETTINGS -->
+    <string name="pref_title">Ajustes</string>
+    <string name="pref_jump_pockets">Comenzar en bolsillo</string>
+    <string name="pref_no_jump">Ninguno</string>
+    <string name="pref_cats_enabled">Categorias habilitadas</string>
+    <string name="add_transaction">Añadir transacción</string>
+    <string name="ok">Ok</string>
+    <string name="update_pocket">Actualizar bolsillo</string>
+
+</resources>
