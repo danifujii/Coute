@@ -1,5 +1,6 @@
 package com.example.daniel.projectnutella;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -18,14 +19,17 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.DbHelper;
 import com.example.daniel.projectnutella.receiver.AlarmReceiver;
 import com.example.daniel.projectnutella.receiver.BootReceiver;
+import com.example.daniel.projectnutella.time.TimePreference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,10 +53,9 @@ public class SettingsActivity extends PreferenceActivity{
 
     public static class PrefsFragment extends PreferenceFragment {
 
-        private PendingIntent alarmIntent;
-
         private ListPreference jumpLP;
         private MultiSelectListPreference catsLP;
+        private CheckBoxPreference notifCBP;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class SettingsActivity extends PreferenceActivity{
             setJumpPocketsLP();
             setCategoriesList();
             setReminderCheck();
+            setTimePicker();
         }
 
         private void setJumpPocketsLP(){
@@ -135,46 +139,36 @@ public class SettingsActivity extends PreferenceActivity{
         }
 
         public void setReminderCheck(){
-            CheckBoxPreference cbp = (CheckBoxPreference) findPreference(getString(R.string.pref_reminder));
-            cbp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            notifCBP = (CheckBoxPreference) findPreference(getString(R.string.pref_reminder));
+            notifCBP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if ((boolean)newValue){
-                        AlarmManager manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTimeInMillis(System.currentTimeMillis());
-                        calendar.set(Calendar.HOUR_OF_DAY,00);
-                        calendar.set(Calendar.MINUTE,05);
+                    if ((boolean)newValue)
+                        com.example.daniel.projectnutella.time.AlarmManager.enableAlarm(getActivity(),
+                                PreferenceManager.getDefaultSharedPreferences(getActivity())
+                                        .getLong(getString(R.string.pref_time_reminder),0));
+                    else
+                        com.example.daniel.projectnutella.time.AlarmManager.disableAlarm(getActivity());
+                    return true;
+                }
+            });
+        }
 
-                        alarmIntent = PendingIntent.getBroadcast(getActivity(),
-                                0, new Intent(getActivity(), AlarmReceiver.class), 0);
-                        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                                AlarmManager.INTERVAL_DAY, alarmIntent);
-
-                        //Activate the BootReceiver
-                        ComponentName receiver = new ComponentName(getActivity(), BootReceiver.class);
-                        PackageManager pm = getActivity().getPackageManager();
-
-                        pm.setComponentEnabledSetting(receiver,
-                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                                PackageManager.DONT_KILL_APP);
-                    }
-                    else{
-                        AlarmManager manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-                        manager.cancel(alarmIntent);
-
-                        //Deactivate the BootReceiver
-                        ComponentName receiver = new ComponentName(getActivity(), BootReceiver.class);
-                        PackageManager pm = getActivity().getPackageManager();
-
-                        pm.setComponentEnabledSetting(receiver,
-                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                PackageManager.DONT_KILL_APP);
-                    }
-
+        public void setTimePicker(){
+            TimePreference tp = (TimePreference) findPreference(getString(R.string.pref_time_reminder));
+            tp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    //Disable old alarm (with old time)
+                    com.example.daniel.projectnutella.time.AlarmManager.disableAlarm(getActivity());
+                    //Enable alarm but with new time, which is already saved
+                    com.example.daniel.projectnutella.time.AlarmManager.enableAlarm(getActivity(), (long)newValue);
                     return true;
                 }
             });
         }
     }
+
+
+
 }

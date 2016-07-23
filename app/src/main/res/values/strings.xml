@@ -47,6 +47,7 @@
     <string name="pref_cats_enabled">Enabled categories</string>
     <string name="pref_reminder">Daily reminder</string>
     <string name="pref_reminder_summary">Remind yourself to add expenses</string>
+    <string name="pref_time_reminder">Reminder time</string>
 
     <!-- NOTIFICATIONS -->
     <string name="notif_title">Daily reminder</string>

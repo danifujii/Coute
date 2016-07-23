@@ -18,8 +18,10 @@ import com.example.daniel.projectnutella.R;
 public class AlarmReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
+        Intent i = new Intent(context,NotifReceiver.class);
+        i.putExtra("NOTIF_ID",0);
         PendingIntent pIntent = PendingIntent.getBroadcast(context,0,
-                new Intent(context,NotifReceiver.class),0);
+                i ,0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_notif)
