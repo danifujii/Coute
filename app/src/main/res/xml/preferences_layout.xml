@@ -10,4 +10,9 @@
         android:title="@string/pref_cats_enabled"
         android:key="@string/pref_cats_enabled"/>
 
+    <CheckBoxPreference
+        android:title="@string/pref_reminder"
+        android:key="@string/pref_reminder"
+        android:summary="@string/pref_reminder_summary"/>
+
 </PreferenceScreen>
