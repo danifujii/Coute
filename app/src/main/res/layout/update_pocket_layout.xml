@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="end"
         >
 
@@ -26,23 +26,31 @@
             android:id="@+id/update_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/delete_button"
+            android:text="@string/delete_pocket"
             style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/colorPrimary"/>
 
-        <Button
-            android:id="@+id/update_cancel_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel_button"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:orientation="horizontal"
+            android:gravity="end">
 
-        <Button
-            android:id="@+id/update_ok_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ok"
-            style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/update_cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_button"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <Button
+                android:id="@+id/update_ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_pocket"
+                style="?android:attr/borderlessButtonStyle"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

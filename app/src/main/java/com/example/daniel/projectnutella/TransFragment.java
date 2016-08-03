@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
@@ -21,6 +22,8 @@ import java.util.List;
 public class TransFragment extends Fragment {
     private String date;
     private List<Transaction> trans;
+    private boolean isLast = false;
+    private boolean isFirst = false;
     private OnFragmentInteractionListener mListener;
 
     public TransFragment() {
@@ -30,6 +33,12 @@ public class TransFragment extends Fragment {
     public void setDate(String date, List<Transaction> transactions){
         this.date = date;
         this.trans = transactions;
+    }
+
+    //Adjust arrows for changing days. Both bools can be true if its the only day
+    public void setDayPosition(boolean isFirst, boolean isLast){
+        this.isFirst = isFirst;
+        this.isLast = isLast;
     }
 
     @Override
@@ -50,6 +59,10 @@ public class TransFragment extends Fragment {
         rv.setLayoutManager(llm);
         rv.setAdapter(new TransactionAdapter(trans,getActivity()));
 
+        if (isFirst)
+            v.findViewById(R.id.day_left_button).setVisibility(View.INVISIBLE);
+        if (isLast)
+            v.findViewById(R.id.day_right_button).setVisibility(View.INVISIBLE);
         return v;
     }
 

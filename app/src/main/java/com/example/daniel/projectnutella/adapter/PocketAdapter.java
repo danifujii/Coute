@@ -1,9 +1,12 @@
 package com.example.daniel.projectnutella.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,6 +61,12 @@ public class PocketAdapter extends RecyclerView.Adapter<PocketAdapter.PocketView
                 balance = balance + Double.valueOf(c.getString(1));
             else balance = balance - Double.valueOf(c.getString(1));
         holder.balanceTv.setText(String.valueOf(balance));
+        if (balance > 0)
+            holder.balanceTv.setTextColor(ContextCompat.getColor(act,R.color.colorIncome));
+        else
+            if (balance < 0)
+                holder.balanceTv.setTextColor(ContextCompat.getColor(act,R.color.colorExpense));
+            //leave 0.0 in neutral color
     }
 
 
@@ -94,10 +103,14 @@ public class PocketAdapter extends RecyclerView.Adapter<PocketAdapter.PocketView
                         Intent i = new Intent(act,PocketActivity.class);
                         i.putExtra("TITLE",db.getPocketName(p.getId()));
                         i.putExtra("ID",p.getId());
-                        act.startActivity(i);
+                        if (Build.VERSION.SDK_INT >= 21)
+                            act.startActivity(i, ActivityOptions.makeSceneTransitionAnimation(act).toBundle());
+                        else
+                            act.startActivity(i);
                     }
                 }
             });
+
             v.findViewById(R.id.pocket_card_view).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

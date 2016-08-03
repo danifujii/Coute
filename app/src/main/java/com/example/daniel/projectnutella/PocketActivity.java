@@ -22,7 +22,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -36,6 +38,7 @@ import android.widget.Toast;
 import com.example.daniel.projectnutella.adapter.TransactionAdapter;
 import com.example.daniel.projectnutella.data.CategoryManager;
 import com.example.daniel.projectnutella.data.DbHelper;
+import com.example.daniel.projectnutella.data.Pocket;
 import com.example.daniel.projectnutella.data.Transaction;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +55,6 @@ public class PocketActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pocket);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,7 +75,7 @@ public class PocketActivity extends AppCompatActivity {
         setTitle(extras.getString("TITLE"));
         pocketId = extras.getInt("ID");
 
-        db = new DbHelper(this);
+        db = DbHelper.getInstance(this);
         //Get all transactions for setting the balance
         setBalance();
 
@@ -293,7 +295,7 @@ public class PocketActivity extends AppCompatActivity {
             TransFragment tf = new TransFragment();
             if (dates.moveToPosition(position)) {
                 String date = dates.getString(0);
-                DbHelper db = new DbHelper(PocketActivity.this);
+                DbHelper db = DbHelper.getInstance(PocketActivity.this);
                 Cursor c = db.getTransactions(pocketId,date);
                 List<Transaction> transactions = new ArrayList<>();
                 while (c.moveToNext()) {
@@ -304,9 +306,16 @@ public class PocketActivity extends AppCompatActivity {
                 }
                 tf.setDate(date,transactions);
                 c.close();
+
+                boolean isFirst, isLast;
+                isLast = (position == dates.getCount()-1);
+                isFirst = (position == 0);
+                tf.setDayPosition(isFirst,isLast);
             }
-            else
-                tf.setDate(getCurrentDate(false),new ArrayList<Transaction>());
+            else {
+                tf.setDate(getCurrentDate(false), new ArrayList<Transaction>());
+                tf.setDayPosition(true,true);
+            }
             return tf;
         }
 
@@ -315,6 +324,16 @@ public class PocketActivity extends AppCompatActivity {
             if (dates.getCount() > 0)
                 return dates.getCount();
             else return 1;
+        }
+    }
+
+    //onClick method for the change day buttons in the fragment
+    public void changeDay(View v){
+        ViewPager mPager = (ViewPager)findViewById(R.id.day_pager);
+        if (mPager != null) {
+            if (v.getId() == R.id.day_left_button)
+                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            else mPager.setCurrentItem(mPager.getCurrentItem() + 1);
         }
     }
 }

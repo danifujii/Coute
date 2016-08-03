@@ -15,6 +15,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Nutella.db";
 
+    private static DbHelper mInstance;
+
     //TABLE COLUMNS
     private static final String[] COLUMNS_POCKET = {Tables.COLUMN_ID, Tables.COLUMN_POCKET_NAME, Tables.COLUMN_POCKET_BALANCE};
     private static final String[] COLUMNS_TRANS = {Tables.COLUMN_ID, Tables.COLUMN_TRANS_AMOUNT, Tables.COLUMN_TRANS_INCOME,
@@ -51,6 +53,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    }
+
+    public static DbHelper getInstance(Context context){
+        if (mInstance == null)
+            mInstance = new DbHelper(context);
+        return mInstance;
     }
 
     public void onCreate(SQLiteDatabase db){

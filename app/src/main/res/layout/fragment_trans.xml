@@ -6,18 +6,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.daniel.projectnutella.TransFragment">
 
-    <TextView
-        android:id="@+id/day_text_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="20/12/2016"
-        android:textSize="18sp"
-        android:textColor="@color/colorBlack"
-        android:paddingLeft="16dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
-        android:fontFamily="sans-serif-light"
-        />
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/day_left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:background="@null"
+            android:onClick="changeDay"/>
+
+        <TextView
+            android:id="@+id/day_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20/12/2016"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlack"
+            android:paddingLeft="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            />
+
+        <ImageButton
+            android:id="@+id/day_right_button"
+            android:onClick="changeDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:padding="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"/>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_recycler_view"

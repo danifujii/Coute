@@ -1,19 +1,23 @@
 package com.example.daniel.projectnutella;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 "error");
 
         if (!keyJump.equals(getString(R.string.pref_no_jump)) && !keyJump.equals("error")){
-            DbHelper db = new DbHelper(this);
+            DbHelper db = DbHelper.getInstance(MainActivity.this);
             Intent i = new Intent(this, PocketActivity.class);
             i.putExtra("ID",Integer.valueOf(keyJump));
             i.putExtra("TITLE",db.getPocketName(Integer.valueOf(keyJump)));
@@ -63,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
         setTitle(getString(R.string.title_all_pockets));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
-        if (fab!=null)
+        if (fab!=null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addPocket();
                 }
             });
+        }
 
         CategoryManager.insertCategoriesIntoDB(this);
         setRecyclerView();
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                  if (pocketDialogTV != null){
                      String pocket = pocketDialogTV.getText().toString();
                      if (!pocket.isEmpty()) {
-                         DbHelper db = new DbHelper(MainActivity.this);
+                         DbHelper db = DbHelper.getInstance(MainActivity.this);
                          if (!db.existsPocket(pocket)) {
                              db.insertPocket(pocket);
                              updateRVAdapter();
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
          * ASAP
          */
         pockets = new ArrayList<>();
-        DbHelper db = new DbHelper(MainActivity.this);
+        DbHelper db = DbHelper.getInstance(MainActivity.this);
         Cursor cursor = db.getPockets();
         while (cursor.moveToNext()){
             pockets.add(new Pocket(Integer.valueOf(cursor.getString(0)),
@@ -144,14 +149,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updatePocket(int pocketPos, String newName){
-        DbHelper db = new DbHelper(MainActivity.this);
+        DbHelper db = DbHelper.getInstance(MainActivity.this);
         Pocket p = pockets.get(pocketPos);
         db.updatePocket(p.getId(),newName);
         updateRVAdapter();
     }
 
     public void deletePocket(int pocketPos){
-        DbHelper db = new DbHelper(MainActivity.this);
+        DbHelper db = DbHelper.getInstance(MainActivity.this);
         Pocket p = pockets.get(pocketPos);
         db.deletePocket(p.getId());
         updateRVAdapter();

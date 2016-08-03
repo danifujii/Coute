@@ -28,13 +28,12 @@ public class AlarmManager {
         android.app.AlarmManager manager = (android.app.AlarmManager)act.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(act,
                 0, new Intent(act, AlarmReceiver.class), 0);
-        manager.setRepeating(android.app.AlarmManager.RTC_WAKEUP, getTime(newValue).getTimeInMillis(),
-                android.app.AlarmManager.INTERVAL_DAY, alarmIntent);
+        manager.setInexactRepeating(android.app.AlarmManager.RTC_WAKEUP, getTime(newValue).getTimeInMillis(),
+                android.app.AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
 
         //Activate the BootReceiver
         ComponentName receiver = new ComponentName(act, BootReceiver.class);
         PackageManager pm = act.getPackageManager();
-
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);

@@ -69,7 +69,7 @@ public class SettingsActivity extends PreferenceActivity{
         }
 
         private void setJumpPocketsLP(){
-            DbHelper db = new DbHelper(getActivity());
+            DbHelper db = DbHelper.getInstance(getActivity());
             Cursor c = db.getPockets();
             List<CharSequence> entriesList = new ArrayList<>();
             List<CharSequence> entryValuesList= new ArrayList<>();
@@ -95,7 +95,7 @@ public class SettingsActivity extends PreferenceActivity{
 
         private void setCategoriesList(){
             catsLP = (MultiSelectListPreference)findPreference(getString(R.string.pref_cats_enabled));
-            DbHelper db = new DbHelper(getActivity());
+            DbHelper db = DbHelper.getInstance(getActivity());
             List<CharSequence> entriesList = new ArrayList<>();
             List<CharSequence> entryValuesList = new ArrayList<>();
             Cursor c = db.getCategories();
@@ -140,6 +140,7 @@ public class SettingsActivity extends PreferenceActivity{
 
         public void setReminderCheck(){
             notifCBP = (CheckBoxPreference) findPreference(getString(R.string.pref_reminder));
+            if (notifCBP != null)
             notifCBP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -156,6 +157,7 @@ public class SettingsActivity extends PreferenceActivity{
 
         public void setTimePicker(){
             TimePreference tp = (TimePreference) findPreference(getString(R.string.pref_time_reminder));
+            if (tp != null)
             tp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {

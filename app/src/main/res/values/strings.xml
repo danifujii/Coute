@@ -17,6 +17,7 @@
     <string name="add_transaction">Add transaction</string>
     <string name="ok">Ok</string>
     <string name="update_pocket">Update pocket</string>
+    <string name="delete_pocket">Delete pocket</string>
 
     <!-- MESSAGES -->
     <string name="add_pocket_dialog">Insert pocket\'s name:</string>
@@ -34,7 +35,7 @@
     <string name="filter_year">This year</string>
     <string name="Balance">Balance</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="title_all_pockets">All pockets</string>
+    <string name="title_all_pockets">Pockets</string>
     <string name="value_0">$5</string>
     <string name="value_1">$10</string>
     <string name="value_2">$25</string>

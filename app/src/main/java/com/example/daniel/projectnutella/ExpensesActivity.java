@@ -63,7 +63,7 @@ public class ExpensesActivity extends AppCompatActivity {
     }
 
     private void updateData(int range){
-        DbHelper db = new DbHelper(this);
+        DbHelper db = DbHelper.getInstance(this);
         Cursor c = db.getTransGroupedCat(pocketId, DbHelper.RANGES[range]);
         catsList = new ArrayList<>();
         while (c.moveToNext())
