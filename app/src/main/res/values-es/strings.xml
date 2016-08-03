@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nutella</string>
+    <string name="app_name">Coute</string>
     <string name="action_settings">Ajustes</string>
     <string name="title_activity_pocket2">PocketActivity</string>
 
@@ -31,7 +31,7 @@
     <string name="filter_year">Este año</string>
     <string name="Balance">Balance</string>
     <string name="title_activity_settings">Ajustes</string>
-    <string name="title_all_pockets">Todos los bolsillos</string>
+    <string name="title_all_pockets">Bolsillos</string>
     <string name="value_0">$5</string>
     <string name="value_1">$10</string>
     <string name="value_2">$25</string>
@@ -45,5 +45,7 @@
     <string name="add_transaction">Añadir transacción</string>
     <string name="ok">Ok</string>
     <string name="update_pocket">Actualizar bolsillo</string>
+    <string name="delete_pocket">Borrar bolsillo</string>
+    <string name="pref_time_reminder"></string>
 
 </resources>
