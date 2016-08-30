@@ -1,6 +1,6 @@
 # Coute
 
-
+![Coute](promo.jpg)
 
 ####Coute is a simple and great expense manager.
 
